@@ -10,7 +10,12 @@ class PatientListPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('App หมูอ้วงบันทึกงาน'),
       ),
-      body: const PatientList(),
+      body: Column(
+        children: const [
+          Text("data"),
+          PatientList()
+        ],
+      ),
       floatingActionButton:FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!
