@@ -11,16 +11,19 @@ class Patient extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      margin: const EdgeInsets.symmetric(vertical: 3.5),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            children: const [
-               PatientHn(),
-              PatientNote()
-            ],
-        ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                PatientHn(),
+                PatientNote()
+              ],
+            ),
+          ),
           const PatientDeleteButton()
         ],
       ),
@@ -33,7 +36,14 @@ class PatientHn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("hn: 123456", style: TextStyle(fontSize: 18, color: Colors.white));
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const [
+        Icon(Icons.person, size: 30, color: Colors.black54),
+        SizedBox(width: 5),
+        Text("123456", style: TextStyle(fontSize: 24, color: Colors.white)),
+      ]
+    );
   }
 }
 
@@ -42,7 +52,14 @@ class PatientNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("note: Hello", style: TextStyle(fontSize: 18, color: Colors.white));
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          Icon(Icons.sticky_note_2_outlined, size: 30, color: Colors.black54),
+          SizedBox(width: 5),
+          Flexible(child: Text("HelloHellodadadasdadadasdasdloHelloHasHelloHellodadadasdadadasdasdloHelloHasHelloHellodadadasdadadasdasdloHelloHas", style: TextStyle(fontSize: 18, color: Colors.white), overflow: TextOverflow.clip))
+      ]
+    );
   }
 }
 

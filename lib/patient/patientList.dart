@@ -11,7 +11,11 @@ class PatientList extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children:const [
-          Patient()
+          Patient(),
+          Patient(),
+          Patient(),
+          Patient(),
+          Patient(),
         ]
       ),
     );
