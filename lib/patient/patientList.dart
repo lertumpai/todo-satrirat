@@ -9,7 +9,12 @@ class PatientList extends StatelessWidget {
     return Expanded(
       child: ListView.separated(
         shrinkWrap: true,
+        physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
         itemBuilder: (BuildContext context, int index) {
+          if (index == 14) {
+            return const SizedBox(height: 1);
+          }
+
           return const Patient();
         },
         separatorBuilder: (context, i) => const SizedBox(height: 10),
