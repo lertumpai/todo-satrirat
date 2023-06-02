@@ -7,7 +7,7 @@ class Patient extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.teal.shade300,
+        color: Colors.teal.shade200,
         borderRadius: BorderRadius.circular(10),
       ),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -15,15 +15,17 @@ class Patient extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                PatientHn(),
-                PatientNote()
-              ],
-            ),
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  PatientHn(),
+                  PatientNote()
+                ],
+              ),
+            )
           ),
-          const PatientDeleteButton()
+          const PatientDeleteButton(),
         ],
       ),
     );
@@ -56,7 +58,7 @@ class PatientNote extends StatelessWidget {
         children: const [
           Icon(Icons.sticky_note_2_outlined, size: 30, color: Colors.black54),
           SizedBox(width: 5),
-          Flexible(child: Text("HelloHellodadadasdadadasdasdloHelloHasHelloHellodadadasdadadasdasdloHelloHasHelloHellodadadasdadadasdasdloHelloHas", style: TextStyle(fontSize: 18, color: Colors.white), overflow: TextOverflow.clip))
+          Flexible(child: Text("abc", style: TextStyle(fontSize: 20, color: Colors.white), overflow: TextOverflow.clip))
       ]
     );
   }
@@ -70,7 +72,7 @@ class PatientDeleteButton extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.delete),
       color: Colors.red.shade500,
-      iconSize: 30,
+      iconSize: 40,
       onPressed: () {},
     );
   }
