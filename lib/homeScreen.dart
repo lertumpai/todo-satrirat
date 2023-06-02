@@ -46,7 +46,7 @@ class MyHomePage extends StatelessWidget {
                               padding: MaterialStatePropertyAll(
                                   EdgeInsets.symmetric(vertical: 18))),
                           child: const Text(
-                            'Setting',
+                            'Settings',
                             style: TextStyle(fontSize: 18),
                           )),
                     ),
