@@ -70,7 +70,7 @@ class PatientNote extends StatelessWidget {
           SizedBox(width: 5),
           Flexible(
               child: Text(
-                  "สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า",
+                  "สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า",
                   style: TextStyle(fontSize: 18, color: Colors.black87),
                   overflow: TextOverflow.clip
               )

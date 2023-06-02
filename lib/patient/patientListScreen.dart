@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_satrirat/patient/patientList.dart';
-import 'package:todo_satrirat/patient/patientSearch.dart';
+import 'package:todo_satrirat/patient/patientManage.dart';
 
 class PatientListPage extends StatelessWidget {
   const PatientListPage({super.key});
@@ -15,21 +15,12 @@ class PatientListPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: const [
-            PatientSearch(),
-            Divider(
-              color: Colors.black54,
-              thickness: 1.0,
-            ),
-            PatientList()
+            PatientManage(),
+            SizedBox(height: 10),
+            PatientList(),
           ],
         ),
       ),
-      // floatingActionButton:FloatingActionButton(
-      //   onPressed: () {
-      //     // Add your onPressed code here!
-      //   },
-      //   child: const Icon(Icons.add),
-      // ) ,
     );
   }
 }
