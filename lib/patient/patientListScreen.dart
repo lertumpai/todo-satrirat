@@ -10,6 +10,14 @@ class PatientListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('App หมูอ้วงบันทึกงาน'),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.add_card, size: 30
+              )
+          ),
+          const SizedBox(width: 10),
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
