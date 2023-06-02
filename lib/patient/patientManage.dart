@@ -10,8 +10,6 @@ class PatientManage extends StatelessWidget {
       child: Row(
         children: const [
           PatientSearch(),
-          SizedBox(width: 5),
-          PatientAdd()
         ],
       ),
     );
@@ -33,22 +31,6 @@ class PatientSearch extends StatelessWidget {
           labelText: 'Search hn',
         ),
       ),
-    );
-  }
-}
-
-class PatientAdd extends StatelessWidget {
-  const PatientAdd({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsetsDirectional.all(15),
-      // decoration: const BoxDecoration(
-      //   borderRadius: BorderRadius.all(Radius.circular(1))
-      // ),
-      color: Colors.blue.shade300,
-      child: const Icon(Icons.add, size: 30),
     );
   }
 }
