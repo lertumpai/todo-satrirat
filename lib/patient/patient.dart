@@ -15,7 +15,15 @@ class Patient extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.teal.shade50,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: -8,
+              blurRadius: 8,
+              offset: const Offset(5, 12), // changes the position of the shadow
+            ),
+          ]
         ),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Row(

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class PatientEditable extends StatelessWidget {
   final int? index;
+  final String? hn;
+  final String? note;
 
-  const PatientEditable({super.key, this.index = 0});
+  const PatientEditable({super.key, this.index = 0, this.hn = "", this.note = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,10 @@ class PatientEditable extends StatelessWidget {
 }
 
 class PatientNote extends StatelessWidget {
+  final String? hn;
+  final String? note;
 
-  const PatientNote({super.key});
+  const PatientNote({super.key, this.hn = "", this.note = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,7 @@ class PatientNote extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: TextField(
-                  style: TextStyle(fontSize: 26),
+                  style: TextStyle(fontSize: 20),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))
@@ -58,7 +62,7 @@ class PatientNote extends StatelessWidget {
                 child: TextField(
                   maxLines: 5,
                   minLines: 5,
-                  style: TextStyle(fontSize: 26),
+                  style: TextStyle(fontSize: 20),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))
@@ -114,7 +118,7 @@ class PatientToggle extends StatelessWidget {
         ),
         const SizedBox(width: 5),
         const Flexible(
-            child: Text("รอส่งเอกสารรอส่งเอกสารรอส่งเอกสารรอส่งเอกสาร", style: TextStyle(fontSize: 30), overflow: TextOverflow.clip)
+            child: Text("รอส่งเอกสารรอส่งเอกสารรอส่งเอกสารรอส่งเอกสาร", style: TextStyle(fontSize: 20), overflow: TextOverflow.clip)
         )
       ],
     );

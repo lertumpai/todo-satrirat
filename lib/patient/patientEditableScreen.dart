@@ -3,8 +3,10 @@ import 'package:todo_satrirat/patient/patientEditable.dart';
 
 class PatientEditablePage extends StatelessWidget {
   final int? index;
+  final String? hn;
+  final String? note;
 
-  const PatientEditablePage({super.key, this.index});
+  const PatientEditablePage({super.key, this.index, this.hn = "", this.note = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class PatientEditablePage extends StatelessWidget {
         ],
       ),
       body: Container(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.all(10),
         child: const PatientEditable(),
       )
     );
