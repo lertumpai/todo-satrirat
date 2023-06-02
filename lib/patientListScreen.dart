@@ -14,7 +14,8 @@ class PatientListPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FilledButton.tonal(
-                onPressed: (){}, child: const Text('Filled Tonal')),
+                onPressed: (){
+                }, child: const Text('Filled Tonal')),
           ],
         ),
       ),

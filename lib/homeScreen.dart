@@ -21,7 +21,9 @@ class MyHomePage extends StatelessWidget {
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 4),
                       child: FilledButton.tonal(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/patient-list');
+                            },
                           style: const ButtonStyle(
                               padding: MaterialStatePropertyAll(
                                   EdgeInsets.symmetric(vertical: 18))),
