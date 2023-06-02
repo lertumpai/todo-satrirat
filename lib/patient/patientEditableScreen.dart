@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:todo_satrirat/patient/patientEditable.dart';
 
 class PatientEditablePage extends StatelessWidget {
   final int? index;
 
-  const PatientEditablePage({super.key, this.index = 0});
+  const PatientEditablePage({super.key, this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,10 @@ class PatientEditablePage extends StatelessWidget {
           const SizedBox(width: 10),
         ],
       ),
-      body: Text(index.toString()),
+      body: Container(
+        padding: const EdgeInsets.all(30),
+        child: const PatientEditable(),
+      )
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 import 'package:todo_satrirat/patient/patientList.dart';
 import 'package:todo_satrirat/patient/patientManage.dart';
 
@@ -12,7 +13,9 @@ class PatientListPage extends StatelessWidget {
         title: const Text('App หมูอ้วงบันทึกงาน'),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PatientEditablePage()));
+              },
               icon: const Icon(Icons.add_card, size: 30
               )
           ),
