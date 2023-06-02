@@ -11,7 +11,6 @@ class Patient extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      margin: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -8,16 +8,13 @@ class PatientList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children:const [
-          Patient(),
-          Patient(),
-          Patient(),
-          Patient(),
-          Patient(),
-        ]
-      ),
+      child: ListView.separated(
+        itemBuilder: (BuildContext context, int index) {
+          return const Patient();
+        },
+        separatorBuilder: (context, i) => const SizedBox(height: 10),
+        itemCount: 50,
+      )
     );
   }
 }
