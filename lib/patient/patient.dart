@@ -1,32 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 
 class Patient extends StatelessWidget {
-  const Patient({super.key});
+  final int? index;
+
+  const Patient({super.key, this.index = 0});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.teal.shade200,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                PatientHn(),
-                Divider(
-                  color: Colors.black54,
-                  thickness: 1.0,
-                ),
-                PatientNote()
-              ],
-            )
-          ),
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PatientEditablePage(index: index)));
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.teal.shade200,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  PatientHn(),
+                  Divider(
+                    color: Colors.black54,
+                    thickness: 1.0,
+                  ),
+                  PatientNote()
+                ],
+              )
+            ),
+          ],
+        ),
       ),
     );
   }

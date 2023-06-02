@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 import 'package:todo_satrirat/patient/patientListScreen.dart';
 
 import 'homeScreen.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MyHomePage(),
         '/patient-list': (context) => const PatientListPage(),
+        '/patient': (context) => const PatientEditablePage(),
       },
     );
   }

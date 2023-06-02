@@ -15,7 +15,7 @@ class PatientList extends StatelessWidget {
             return const SizedBox(height: 1);
           }
 
-          return const Patient();
+          return Patient(index: index);
         },
         separatorBuilder: (context, i) => const SizedBox(height: 10),
         itemCount: 15,
