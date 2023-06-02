@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_satrirat/patientListScreen.dart';
+import 'package:todo_satrirat/patient/patientListScreen.dart';
 
 import 'homeScreen.dart';
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'แอพหมูอ้วง',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.teal
       ),
       initialRoute: '/',
       routes: {

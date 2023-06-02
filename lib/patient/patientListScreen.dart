@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_satrirat/patient/patientList.dart';
 
 class PatientListPage extends StatelessWidget {
   const PatientListPage({super.key});
@@ -9,16 +10,13 @@ class PatientListPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('App หมูอ้วงบันทึกงาน'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FilledButton.tonal(
-                onPressed: (){
-                }, child: const Text('Filled Tonal')),
-          ],
-        ),
-      ),
+      body: const PatientList(),
+      floatingActionButton:FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        child: const Icon(Icons.add),
+      ) ,
     );
   }
 }
