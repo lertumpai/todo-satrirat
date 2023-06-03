@@ -3,11 +3,14 @@ import 'package:isar/isar.dart';
 part 'patientTodo.g.dart';
 
 @collection
-class TodoModel {
+class PatientTodoModel {
   Id id = Isar.autoIncrement;
 
-  String? name;
+  @Index(type: IndexType.value)
+  int? patientId;
 
-  // byte -> 0-255
-  short? sequence;
+  @Index(type: IndexType.value)
+  int? todoId;
+
+  bool? done;
 }

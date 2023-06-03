@@ -1,12 +1,17 @@
 import 'package:bloc/bloc.dart';
+import 'package:isar/isar.dart';
 import 'package:todo_satrirat/db/model/patient.dart';
+import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/patient/bloc/patientEditing.state.dart';
 
 import '../../db/db.dart';
+import '../../db/model/todo.dart';
 
 class PatientEditingCubit extends Cubit<PatientEditingState> {
   final db = Database.instance;
   final patientRepo = Database.instance?.collection<PatientModel>();
+  final todoRepo = Database.instance?.collection<TodoModel>();
+  final patientTodoRepo = Database.instance?.collection<PatientTodoModel>();
 
   PatientEditingCubit() : super(const PatientEditingState());
 
@@ -49,7 +54,19 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     final updatedStatusSaving = state.updateStatus(PatientEditingStatusEnum.saving);
     emit(updatedStatusSaving);
     await db?.writeTxn(() async {
-      await patientRepo?.put(state.patient!);
+      final id = await patientRepo?.put(state.patient!);
+      final todos = await todoRepo?.where().findAll();
+      await Future.wait(
+        todos!.map(
+            (todo) async {
+              final patientTodo = PatientTodoModel();
+              patientTodo.done = false;
+              patientTodo.patientId = id;
+              patientTodo.todoId = todo.id;
+              return patientTodoRepo?.put(patientTodo);
+          }
+        )
+      );
     });
     final updatedStatusSaved = state.updateStatus(PatientEditingStatusEnum.saved);
     emit(updatedStatusSaved);
