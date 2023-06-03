@@ -35,7 +35,11 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     }
 
     final updatedState = state
-        .initPatient(patient!)
+        .initPatient(
+      patient: patient!,
+      patientTodo: const [],
+      todo: const [],
+    )
         .updateStatus(PatientEditingStatusEnum.ready);
     emit(updatedState);
   }

@@ -39,9 +39,7 @@ class Patient extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   PatientHn(
-                      id: patient.id,
-                      hn: patient.hn!,
-                      updatedAt: patient.updatedAt!,
+                      patient: patient,
                       deletePatient: deletePatient
                   ),
                   Divider(
@@ -62,17 +60,13 @@ class Patient extends StatelessWidget {
 }
 
 class PatientHn extends StatelessWidget {
-  final String hn;
   final Function(int) deletePatient;
-  final int id;
-  final DateTime updatedAt;
+  final PatientModel patient;
 
   const PatientHn({
     super.key,
-    required this.hn,
     required this.deletePatient,
-    required this.id,
-    required this.updatedAt,
+    required this.patient
   });
 
   @override
@@ -91,13 +85,17 @@ class PatientHn extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          hn,
+                          patient.hn!,
                           style: const TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.w600),
                           overflow: TextOverflow.clip
                       ),
                       Text(
-                          "${Day.fromDateTime(updatedAt).format("DD-MM-YYYY HH:mm")} [$id]",
-                          style: const TextStyle(fontSize: 14, color: Colors.black26)
+                          "สร้างเมื่อ: ${Day.fromDateTime(patient.createdAt!).format("DD-MM-YYYY HH:mm")} [${patient.id}]",
+                          style: const TextStyle(fontSize: 12, color: Colors.black26)
+                      ),
+                      Text(
+                          "อัพเดตล่าสุด: ${Day.fromDateTime(patient.updatedAt!).format("DD-MM-YYYY HH:mm")}",
+                          style: const TextStyle(fontSize: 12, color: Colors.black26)
                       ),
                     ],
                   )
@@ -105,7 +103,7 @@ class PatientHn extends StatelessWidget {
               )
             ],
           ),
-          PatientDeleteButton(id: id, deletePatient: deletePatient),
+          PatientDeleteButton(id: patient.id, deletePatient: deletePatient),
         ]
     );
   }
