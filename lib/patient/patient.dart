@@ -94,7 +94,7 @@ class PatientHn extends StatelessWidget {
                           style: const TextStyle(fontSize: 12, color: Colors.black26)
                       ),
                       Text(
-                          "อัพเดตล่าสุด: ${Day.fromDateTime(patient.updatedAt!).format("DD/MM/YYYY HH:mm")}",
+                          "อัพเดตเมื่อ: ${Day.fromDateTime(patient.updatedAt!).format("DD/MM/YYYY HH:mm")}",
                           style: const TextStyle(fontSize: 12, color: Colors.black26)
                       ),
                     ],

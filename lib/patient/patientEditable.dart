@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:todo_satrirat/db/model/patientTodo.dart';
+import 'package:todo_satrirat/db/model/todo.dart';
 
 import '../db/model/patient.dart';
 
 class PatientEditable extends StatelessWidget {
   final PatientModel patient;
+  final List<PatientTodoModel> patientTodos;
+  final List<TodoModel> todos;
   final Function(String) onHnChange;
   final Function(String) onNoteChange;
 
   const PatientEditable({
     super.key,
     required this.patient,
+    required this.patientTodos,
+    required this.todos,
     required this.onHnChange,
     required this.onNoteChange,
   });
@@ -24,7 +30,10 @@ class PatientEditable extends StatelessWidget {
           onNoteChange: onNoteChange,
         ),
         const SizedBox(height: 15),
-        const PatientToggleList(),
+        PatientToggleList(
+            patientTodos: patientTodos,
+            todos: todos,
+        ),
       ],
     );
   }
@@ -113,8 +122,14 @@ class _PatientNoteState extends State<PatientNote> {
 }
 
 class PatientToggleList extends StatelessWidget {
+  final List<PatientTodoModel> patientTodos;
+  final List<TodoModel> todos;
 
-  const PatientToggleList({super.key});
+  const PatientToggleList({
+    super.key,
+    required this.todos,
+    required this.patientTodos,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -123,22 +138,31 @@ class PatientToggleList extends StatelessWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
         itemBuilder: (BuildContext context, int index) {
-          if (index == 14) {
+          if (index == patientTodos.length) {
             return const SizedBox(height: 1);
           }
 
-          return const PatientToggle();
+          return PatientToggle(
+            name: todos.firstWhere((todo) => todo.id == patientTodos[index].todoId).name!,
+            done: patientTodos[index].done!,
+          );
         },
         separatorBuilder: (context, i) => const SizedBox(height: 10),
-        itemCount: 15,
+        itemCount: patientTodos.length + 1,
       ),
     );
   }
 }
 
 class PatientToggle extends StatelessWidget {
+  final String name;
+  final bool done;
 
-  const PatientToggle({super.key});
+  const PatientToggle({
+    super.key,
+    required this.name,
+    required this.done,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -153,8 +177,12 @@ class PatientToggle extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 5),
-        const Flexible(
-            child: Text("รอส่งเอกสารรอ", style: TextStyle(fontSize: 20), overflow: TextOverflow.clip)
+        Flexible(
+            child: Text(
+                name,
+                style: const TextStyle(fontSize: 20),
+                overflow: TextOverflow.clip,
+            )
         )
       ],
     );

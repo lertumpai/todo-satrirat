@@ -8,8 +8,8 @@ enum PatientEditingStatusEnum { init, ready, loading, saving, saved }
 
 class PatientEditingState extends Equatable {
   final PatientModel? patient;
-  final List<PatientTodoModel>? patientTodos;
-  final List<TodoModel>? todos;
+  final List<PatientTodoModel> patientTodos;
+  final List<TodoModel> todos;
   final PatientEditingStatusEnum status;
 
   const PatientEditingState({

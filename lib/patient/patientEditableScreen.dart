@@ -67,6 +67,8 @@ class _PatientEditablePageState extends State<PatientEditablePage> {
             padding: const EdgeInsets.all(10),
             child: PatientEditable(
               patient: state.patient!,
+              patientTodos: state.patientTodos,
+              todos: state.todos,
               onHnChange: onHnChange,
               onNoteChange: onNoteChange,
             ),
