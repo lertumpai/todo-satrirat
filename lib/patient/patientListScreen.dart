@@ -49,14 +49,19 @@ class _PatientListPageState extends State<PatientListPage> {
           children: [
             const PatientManage(),
             const SizedBox(height: 10),
-            BlocBuilder<PatientListCubit, PatientListState>(
-              builder: (context, state) {
-                return PatientList(
-                  patients: state.patients,
-                  onDeletePatient: onDeletePatient,
-                );
-              }
-            ),
+            BlocConsumer<PatientListCubit, PatientListState>(
+                listener: (context, state) {
+                  if (state.status == PatientListStatusEnum.loading) {
+                    context.read<PatientListCubit>().getAll();
+                  }
+                },
+                builder: (context, state) {
+                  return PatientList(
+                    patients: state.patients,
+                    onDeletePatient: onDeletePatient,
+                  );
+                }
+            )
           ],
         ),
       ),
