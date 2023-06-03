@@ -4,7 +4,6 @@ import 'package:todo_satrirat/db/model/patient.dart';
 import 'package:todo_satrirat/patient/bloc/patientList.state.dart';
 
 import '../../db/db.dart';
-import '../patient.dart';
 
 class PatientListCubit extends Cubit<PatientListState> {
   final db = Database.instance;

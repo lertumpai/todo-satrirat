@@ -13,7 +13,7 @@ class PatientEditingState extends Equatable {
     this.status = PatientEditingStatusEnum.init,
   });
 
-  PatientEditingState updatePatient(PatientModel patient) {
+  PatientEditingState initPatient(PatientModel patient) {
     return PatientEditingState(
       patient: patient,
       status: status,
@@ -21,6 +21,8 @@ class PatientEditingState extends Equatable {
   }
 
   PatientEditingState updateHn(String hn) {
+    final now = DateTime.now();
+    patient!.updatedAt = now;
     patient!.hn = hn;
     return PatientEditingState(
       patient: patient,
@@ -29,6 +31,8 @@ class PatientEditingState extends Equatable {
   }
 
   PatientEditingState updateNote(String note) {
+    final now = DateTime.now();
+    patient!.updatedAt = now;
     patient!.note = note;
     return PatientEditingState(
       patient: patient,

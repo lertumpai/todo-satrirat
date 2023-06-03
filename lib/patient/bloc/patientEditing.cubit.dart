@@ -30,7 +30,7 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     }
 
     final updatedState = state
-        .updatePatient(patient!)
+        .initPatient(patient!)
         .updateStatus(PatientEditingStatusEnum.ready);
     emit(updatedState);
   }
