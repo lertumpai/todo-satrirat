@@ -29,11 +29,13 @@ class SettingsOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(width: 5),
-        Text(option, style: const TextStyle(fontSize: 26), overflow: TextOverflow.clip),
-      ],
+    return Expanded(
+      child: Row(
+        children: [
+          const SizedBox(width: 5),
+          Flexible(child: Text(option, style: const TextStyle(fontSize: 24), overflow: TextOverflow.clip)),
+        ],
+      ),
     );
   }
 }
