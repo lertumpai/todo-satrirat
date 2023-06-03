@@ -29,7 +29,10 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
       patient.updatedAt = now;
     }
 
-    emit(PatientEditingState(patient: patient));
+    final updatedState = state
+        .updatePatient(patient!)
+        .updateStatus(PatientEditingStatusEnum.ready);
+    emit(updatedState);
   }
 
   updatePatientHn(String hn) {
@@ -43,8 +46,12 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
   }
 
   save() async {
+    final updatedStatusSaving = state.updateStatus(PatientEditingStatusEnum.saving);
+    emit(updatedStatusSaving);
     await db?.writeTxn(() async {
       await patientRepo?.put(state.patient!);
     });
+    final updatedStatusSaved = state.updateStatus(PatientEditingStatusEnum.saved);
+    emit(updatedStatusSaved);
   }
 }

@@ -11,6 +11,12 @@ class PatientListCubit extends Cubit<PatientListState> {
 
   PatientListCubit() : super(const PatientListState(patients: []));
 
+  void loading() {
+    final newState = state
+        .updateStatus(PatientListStatusEnum.loading);
+    emit(newState);
+  }
+
   void getAll() async {
     final patients = await patientRepo?.where().findAll();
     final newState = state

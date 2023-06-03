@@ -4,6 +4,8 @@ import 'package:todo_satrirat/patient/bloc/patientEditing.cubit.dart';
 import 'package:todo_satrirat/patient/bloc/patientEditing.state.dart';
 import 'package:todo_satrirat/patient/patientEditable.dart';
 
+import 'bloc/patientList.cubit.dart';
+
 class PatientEditablePage extends StatefulWidget {
   final int? id;
 
@@ -20,6 +22,7 @@ class _PatientEditablePageState extends State<PatientEditablePage> {
   @override
   void initState() {
     super.initState();
+    context.read<PatientEditingCubit>().clear();
     context.read<PatientEditingCubit>().initPatientEditing(widget.id);
   }
 
@@ -42,23 +45,32 @@ class _PatientEditablePageState extends State<PatientEditablePage> {
           IconButton(
               onPressed: () {
                 onSave();
-                Navigator.pop(context);
               },
               icon: const Icon(Icons.save, size: 30)
           ),
           const SizedBox(width: 10),
         ],
       ),
-      body: BlocBuilder<PatientEditingCubit, PatientEditingState>(
+      body: BlocConsumer<PatientEditingCubit, PatientEditingState>(
+        listenWhen: (prev, cur) {
+          return cur.patient != null;
+        },
+        listener: (context, state) {
+          if (state.status == PatientEditingStatusEnum.saved) {
+            Navigator.pop(context);
+            context.read<PatientListCubit>().loading();
+          }
+        },
         builder: (context, state) {
-          return Container(
+          return state.patient != null
+              ? Container(
             padding: const EdgeInsets.all(10),
             child: PatientEditable(
               patient: state.patient!,
               onHnChange: onHnChange,
               onNoteChange: onNoteChange,
             ),
-          );
+          ) : const SizedBox();
         }
       )
     );
