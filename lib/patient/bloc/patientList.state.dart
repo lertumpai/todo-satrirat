@@ -2,15 +2,15 @@ import 'package:equatable/equatable.dart';
 
 import '../../db/model/patient.dart';
 
-class PatientManagementState extends Equatable {
+class PatientListState extends Equatable {
   final List<Patient> patients;
 
-  const PatientManagementState({
+  const PatientListState({
     this.patients = const []
   });
 
   updatePatients(List<Patient> patients) {
-    return PatientManagementState(
+    return PatientListState(
       patients: patients,
     );
   }

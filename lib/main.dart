@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_satrirat/patient/bloc/patientEditing.cubit.dart';
+import 'package:todo_satrirat/patient/bloc/patientList.cubit.dart';
+import 'package:todo_satrirat/patient/bloc/patientList.state.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 import 'package:todo_satrirat/patient/patientListScreen.dart';
 import 'package:todo_satrirat/settings/bloc/settings.cubit.dart';
@@ -24,6 +27,12 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<SettingsCubit>(
           create: (BuildContext context) => SettingsCubit(),
+        ),
+        BlocProvider<PatientListCubit>(
+          create: (BuildContext context) => PatientListCubit(),
+        ),
+        BlocProvider<PatientEditingCubit>(
+          create: (BuildContext context) => PatientEditingCubit(),
         )
       ],
       child: MaterialApp(
