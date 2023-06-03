@@ -8,6 +8,7 @@ class PatientEditable extends StatelessWidget {
   final PatientModel patient;
   final List<PatientTodoModel> patientTodos;
   final List<TodoModel> todos;
+  final Function(int) onTogglePatientTodo;
   final Function(String) onHnChange;
   final Function(String) onNoteChange;
 
@@ -16,6 +17,7 @@ class PatientEditable extends StatelessWidget {
     required this.patient,
     required this.patientTodos,
     required this.todos,
+    required this.onTogglePatientTodo,
     required this.onHnChange,
     required this.onNoteChange,
   });
@@ -33,6 +35,7 @@ class PatientEditable extends StatelessWidget {
         PatientToggleList(
             patientTodos: patientTodos,
             todos: todos,
+            onTogglePatientTodo: onTogglePatientTodo,
         ),
       ],
     );
@@ -124,11 +127,13 @@ class _PatientNoteState extends State<PatientNote> {
 class PatientToggleList extends StatelessWidget {
   final List<PatientTodoModel> patientTodos;
   final List<TodoModel> todos;
+  final Function(int) onTogglePatientTodo;
 
   const PatientToggleList({
     super.key,
     required this.todos,
     required this.patientTodos,
+    required this.onTogglePatientTodo,
   });
 
   @override
@@ -144,10 +149,14 @@ class PatientToggleList extends StatelessWidget {
 
           return PatientToggle(
             name: todos.firstWhere((todo) => todo.id == patientTodos[index].todoId).name!,
-            done: patientTodos[index].done!,
+            patientTodo: patientTodos[index],
+            onTogglePatientTodo: onTogglePatientTodo,
           );
         },
-        separatorBuilder: (context, i) => const SizedBox(height: 10),
+        separatorBuilder: (context, i) => const Divider(
+          color: Colors.black12,
+          thickness: 1,
+        ),
         itemCount: patientTodos.length + 1,
       ),
     );
@@ -156,12 +165,14 @@ class PatientToggleList extends StatelessWidget {
 
 class PatientToggle extends StatelessWidget {
   final String name;
-  final bool done;
+  final PatientTodoModel patientTodo;
+  final Function(int) onTogglePatientTodo;
 
   const PatientToggle({
     super.key,
     required this.name,
-    required this.done,
+    required this.patientTodo,
+    required this.onTogglePatientTodo,
   });
 
   @override
@@ -169,12 +180,12 @@ class PatientToggle extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          child: Switch(
-            activeColor: Colors.teal.shade200,
-            value: true,
-            onChanged: (bool value) {},
-          ),
+        Switch(
+          activeColor: Colors.teal.shade200,
+          value: patientTodo.done!,
+          onChanged: (bool value) {
+            onTogglePatientTodo(patientTodo.id);
+          },
         ),
         const SizedBox(width: 5),
         Flexible(

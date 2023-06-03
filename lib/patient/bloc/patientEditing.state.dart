@@ -66,7 +66,20 @@ class PatientEditingState extends Equatable {
   }
 
   PatientTodoModel getPatientTodoByTodoId(int todoId) {
-    return patientTodos!.firstWhere((patientTodo) => patientTodo.todoId == todoId);
+    return patientTodos.firstWhere((patientTodo) => patientTodo.todoId == todoId);
+  }
+
+  PatientEditingState toggleDoneByPatientTodoId(int patientTodoId) {
+    final updatedToggle = patientTodos.map((patientTodo) {
+      if (patientTodo.id == patientTodoId ) {
+        patientTodo.done = patientTodo.done == true ? false : true;
+        return patientTodo;
+      }
+      return patientTodo;
+    }).toList();
+    return copyWith(
+      patientTodos: updatedToggle,
+    );
   }
 
   @override
