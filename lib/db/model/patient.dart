@@ -8,4 +8,10 @@ class Patient {
 
   @Index(type: IndexType.value)
   String? hn;
+
+  String? note;
+
+  DateTime? createdAt;
+
+  DateTime? updatedAt;
 }
