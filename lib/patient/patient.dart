@@ -87,8 +87,13 @@ class PatientHn extends StatelessWidget {
                 children: [
                   const Icon(Icons.person, size: 30, color: Colors.black54),
                   const SizedBox(width: 5),
-                  Text(hn, style: const TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.w700)),
-                  Text(" (${Day.fromDateTime(updatedAt).format("DD-MM-YYYY HH:mm")})", style: const TextStyle(fontSize: 20, color: Colors.black26)),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(hn, style: const TextStyle(fontSize: 24, color: Colors.black87, fontWeight: FontWeight.w600)),
+                      Text("[$id] ${Day.fromDateTime(updatedAt).format("DD-MM-YYYY HH:mm")}", style: const TextStyle(fontSize: 16, color: Colors.black26)),
+                    ],
+                  )
                 ],
               )
             ],
