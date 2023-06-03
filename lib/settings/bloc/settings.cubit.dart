@@ -24,6 +24,6 @@ class SettingsCubit extends Cubit<TodoListType> {
     await db?.writeTxn(() async {
       await todoRepo?.put(todo);
     });
-    // getAll();
+    getAll();
   }
 }

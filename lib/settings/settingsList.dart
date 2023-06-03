@@ -7,13 +7,22 @@ import 'package:todo_satrirat/settings/settings.dart';
 
 import 'bloc/settings.cubit.dart';
 
-class SettingsListPage extends StatelessWidget {
+class SettingsListPage extends StatefulWidget {
   const SettingsListPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // context.read<SettingsCubit>().create();
+  State<SettingsListPage> createState() => _SettingsListPageState();
+}
+
+class _SettingsListPageState extends State<SettingsListPage> {
+  @override
+  void initState() {
+    super.initState();
     context.read<SettingsCubit>().getAll();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, TodoListType>(
       builder: (context, todos) {
         return Expanded(
