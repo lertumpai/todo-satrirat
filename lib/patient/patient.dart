@@ -14,16 +14,11 @@ class Patient extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.teal.shade50,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: -8,
-              blurRadius: 8,
-              offset: const Offset(5, 12), // changes the position of the shadow
-            ),
-          ]
+          border: Border.all(
+              width: 2,
+              color: Colors.teal.shade200
+          )
         ),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Row(
@@ -31,13 +26,13 @@ class Patient extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  PatientHn(),
+                children: [
+                  const PatientHn(),
                   Divider(
-                    color: Colors.black54,
-                    thickness: 1.0,
+                    color: Colors.teal.shade200,
+                    thickness: 2.0,
                   ),
-                  PatientNote()
+                  const PatientNote()
                 ],
               )
             ),

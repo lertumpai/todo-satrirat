@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'แอพหมูอ้วง',
       theme: ThemeData(
-        primarySwatch: Colors.teal
+        primarySwatch: Colors.teal,
       ),
       initialRoute: '/',
       routes: {

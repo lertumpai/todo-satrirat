@@ -109,16 +109,18 @@ class PatientToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Switch(
-          activeColor: Colors.teal.shade200,
-          value: true,
-          onChanged: (bool value) {},
+        Container(
+          child: Switch(
+            activeColor: Colors.teal.shade200,
+            value: true,
+            onChanged: (bool value) {},
+          ),
         ),
         const SizedBox(width: 5),
         const Flexible(
-            child: Text("รอส่งเอกสารรอส่งเอกสารรอส่งเอกสารรอส่งเอกสาร", style: TextStyle(fontSize: 20), overflow: TextOverflow.clip)
+            child: Text("รอส่งเอกสารรอ", style: TextStyle(fontSize: 20), overflow: TextOverflow.clip)
         )
       ],
     );
