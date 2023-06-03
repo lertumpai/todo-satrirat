@@ -21,4 +21,8 @@ class Database {
 
     return _instance;
   }
+
+  static Isar? get instance {
+    return _instance;
+  }
 }
