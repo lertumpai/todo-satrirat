@@ -17,12 +17,19 @@ class SettingsCubit extends Cubit<TodoListType> {
     emit(todos!);
   }
 
-  void create() async {
+  void create(String name) async {
     final todo = Todo();
-    todo.name = "name:${DateTime.now().toIso8601String()}";
+    todo.name = name;
     todo.sequence = 0;
     await db?.writeTxn(() async {
       await todoRepo?.put(todo);
+    });
+    getAll();
+  }
+
+  void delete(short id) async {
+    await db?.writeTxn(() async {
+      await todoRepo?.delete(id);
     });
     getAll();
   }
