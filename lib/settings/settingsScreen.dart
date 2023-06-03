@@ -25,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
     void createTodo(String name) {
       context.read<SettingsCubit>().create(name);
     }
-    void deleteTodo(short id) {
+    void deleteTodo(int id) {
       context.read<SettingsCubit>().delete(id);
     }
 
@@ -48,7 +48,10 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             BlocBuilder<SettingsCubit, TodoListType>(
               builder: (context, todos) {
-                return SettingsListPage(todos: todos);
+                return SettingsListPage(
+                  todos: todos,
+                  deleteTodo: deleteTodo
+                );
               }
             )
           ],

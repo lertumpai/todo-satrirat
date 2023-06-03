@@ -7,8 +7,13 @@ import '../db/model/todo.dart';
 
 class Settings extends StatelessWidget {
   final Todo todo;
+  final Function(int) deleteTodo;
 
-  const Settings({super.key, required this.todo});
+  const Settings({
+    super.key,
+    required this.todo,
+    required this.deleteTodo,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,7 @@ class Settings extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SettingsOption(option: todo.name ?? ""),
-        const SettingsDelete(),
+        SettingsDelete(id: todo.id, deleteTodo: deleteTodo),
       ],
     );
   }
@@ -41,7 +46,14 @@ class SettingsOption extends StatelessWidget {
 }
 
 class SettingsDelete extends StatelessWidget {
-  const SettingsDelete({super.key});
+  final Function(int) deleteTodo;
+  final int id;
+
+  const SettingsDelete({
+    super.key,
+    required this.id,
+    required this.deleteTodo,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +61,9 @@ class SettingsDelete extends StatelessWidget {
       icon: const Icon(Icons.delete),
       color: Colors.red.shade500,
       iconSize: 30,
-      onPressed: () {},
+      onPressed: () {
+        deleteTodo(id);
+      },
     );
   }
 }

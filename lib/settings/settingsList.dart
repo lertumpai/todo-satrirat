@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:isar/isar.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 import 'package:todo_satrirat/patient/patientList.dart';
 import 'package:todo_satrirat/patient/patientManage.dart';
@@ -10,8 +11,13 @@ import 'bloc/settings.cubit.dart';
 
 class SettingsListPage extends StatelessWidget {
   final List<Todo> todos;
+  final Function(int) deleteTodo;
 
-  const SettingsListPage({super.key, required this.todos});
+  const SettingsListPage({
+    super.key,
+    required this.todos,
+    required this.deleteTodo,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,7 @@ class SettingsListPage extends StatelessWidget {
             return const SizedBox(height: 1);
           }
 
-          return Settings(todo: todos[index]);
+          return Settings(todo: todos[index], deleteTodo: deleteTodo);
         },
         separatorBuilder: (context, i) => const Divider(color: Colors.black54, thickness: 1.0),
         itemCount: todos.length + 1,
