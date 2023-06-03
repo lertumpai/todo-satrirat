@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 
 class PatientManage extends StatelessWidget {
-  const PatientManage({super.key});
+  final Function(String) onSearch;
+
+  const PatientManage({
+    super.key,
+    required this.onSearch,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: Row(
-        children: const [
-          PatientSearch(),
+        children: [
+          PatientSearch(
+              onSearch: onSearch,
+          ),
         ],
       ),
     );
@@ -17,13 +24,21 @@ class PatientManage extends StatelessWidget {
 }
 
 class PatientSearch extends StatelessWidget {
-  const PatientSearch({super.key});
+  final Function(String) onSearch;
+
+  const PatientSearch({
+    super.key,
+    required this.onSearch,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
+    return Expanded(
       child: TextField(
-        decoration: InputDecoration(
+        onChanged: (String v) {
+          onSearch(v);
+        },
+        decoration: const InputDecoration(
           border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))
           ),

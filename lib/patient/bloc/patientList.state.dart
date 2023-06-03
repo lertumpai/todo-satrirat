@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../db/model/patient.dart';
 
-enum PatientListStatusEnum { init, loading, ready }
+enum PatientListStatusEnum { init, loading, searching, ready }
 
 class PatientListState extends Equatable {
   final List<PatientModel> patients;

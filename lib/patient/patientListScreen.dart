@@ -26,6 +26,9 @@ class _PatientListPageState extends State<PatientListPage> {
     void onDeletePatient(int id) {
       context.read<PatientListCubit>().delete(id);
     }
+    void onSearch(String hn) {
+      context.read<PatientListCubit>().search(hn);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +50,9 @@ class _PatientListPageState extends State<PatientListPage> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            const PatientManage(),
+            PatientManage(
+              onSearch: onSearch,
+            ),
             const SizedBox(height: 10),
             BlocConsumer<PatientListCubit, PatientListState>(
                 listener: (context, state) {
