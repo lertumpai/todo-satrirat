@@ -33,6 +33,7 @@ class SettingsListPage extends StatelessWidget {
           }
 
           return Settings(
+              key: Key(todos[index].id.toString()),
               todo: todos[index],
               onDeleteTodo: onDeleteTodo,
               onUpdateTodo: onUpdateTodo

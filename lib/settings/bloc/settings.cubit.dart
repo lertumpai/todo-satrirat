@@ -32,9 +32,7 @@ class SettingsCubit extends Cubit<TodoListType> {
   void delete(int id) async {
     await db?.writeTxn(() async {
       await todoRepo?.delete(id);
-      final patientTodos = await patientTodoRepo?.filter().todoIdEqualTo(id).findAll();
-      final patientTodoIds = patientTodos!.map((patientTodo) => patientTodo.id).toList();
-      await patientTodoRepo?.deleteAll(patientTodoIds);
+      await patientTodoRepo?.filter().todoIdEqualTo(id).deleteAll();
     });
     getAll();
   }
