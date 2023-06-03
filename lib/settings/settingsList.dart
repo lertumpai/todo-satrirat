@@ -12,20 +12,24 @@ class SettingsListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // context.read<SettingsCubit>().create();
+    context.read<SettingsCubit>().getAll();
     return BlocBuilder<SettingsCubit, TodoListType>(
-      builder: (context, state) {
-        return ListView.separated(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
-          itemBuilder: (BuildContext context, int index) {
-            if (index == state.length) {
-              return const SizedBox(height: 1);
-            }
+      builder: (context, todos) {
+        return Expanded(
+          child: ListView.separated(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
+            itemBuilder: (BuildContext context, int index) {
+              if (index == todos.length) {
+                return const SizedBox(height: 1);
+              }
 
-            return Settings(option: index.toString());
-          },
-          separatorBuilder: (context, i) => const Divider(color: Colors.black54, thickness: 1.0),
-          itemCount: state.length + 1,
+              return Settings(todo: todos[index]);
+            },
+            separatorBuilder: (context, i) => const Divider(color: Colors.black54, thickness: 1.0),
+            itemCount: todos.length + 1,
+          ),
         );
       }
     );
