@@ -1,46 +1,80 @@
 import 'package:flutter/material.dart';
 
-class PatientEditable extends StatelessWidget {
-  final int? index;
-  final String? hn;
-  final String? note;
+import '../db/model/patient.dart';
 
-  const PatientEditable({super.key, this.index = 0, this.hn = "", this.note = ""});
+class PatientEditable extends StatelessWidget {
+  final PatientModel patient;
+  final Function(String) onHnChange;
+  final Function(String) onNoteChange;
+
+  const PatientEditable({
+    super.key,
+    required this.patient,
+    required this.onHnChange,
+    required this.onNoteChange,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: const [
-          PatientNote(),
-          SizedBox(height: 15),
-          PatientToggleList(),
+        children: [
+          PatientNote(
+            patient: patient,
+            onHnChange: onHnChange,
+            onNoteChange: onNoteChange,
+          ),
+          const SizedBox(height: 15),
+          const PatientToggleList(),
         ],
       ),
     );
   }
 }
 
-class PatientNote extends StatelessWidget {
-  final String? hn;
-  final String? note;
+class PatientNote extends StatefulWidget {
+  final PatientModel patient;
+  final Function(String) onHnChange;
+  final Function(String) onNoteChange;
 
-  const PatientNote({super.key, this.hn = "", this.note = ""});
+  const PatientNote({
+    super.key,
+    required this.patient,
+    required this.onHnChange,
+    required this.onNoteChange,
+  });
+
+  @override
+  State<PatientNote> createState() => _PatientNoteState();
+}
+
+class _PatientNoteState extends State<PatientNote> {
+  final TextEditingController _hnController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _hnController.text = widget.patient.hn!;
+    _noteController.text = widget.patient.note!;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
-          children: const [
-            Icon(Icons.person, size: 50, color: Colors.black54),
-            SizedBox(width: 5),
+          children: [
+            const Icon(Icons.person, size: 50, color: Colors.black54),
+            const SizedBox(width: 5),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: TextField(
-                  style: TextStyle(fontSize: 20),
-                  decoration: InputDecoration(
+                  controller: _hnController,
+                  onChanged: widget.onHnChange,
+                  style: const TextStyle(fontSize: 20),
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))
                     ),
@@ -53,17 +87,19 @@ class PatientNote extends StatelessWidget {
         const SizedBox(height: 15),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Icon(Icons.sticky_note_2_outlined, size: 50, color: Colors.black54),
-            SizedBox(width: 5),
+          children: [
+            const Icon(Icons.sticky_note_2_outlined, size: 50, color: Colors.black54),
+            const SizedBox(width: 5),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   maxLines: 5,
                   minLines: 5,
-                  style: TextStyle(fontSize: 20),
-                  decoration: InputDecoration(
+                  style: const TextStyle(fontSize: 20),
+                  controller: _noteController,
+                  onChanged: widget.onNoteChange,
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))
                     ),

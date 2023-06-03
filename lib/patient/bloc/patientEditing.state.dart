@@ -15,6 +15,20 @@ class PatientEditingState extends Equatable {
     );
   }
 
+  updateHn(String hn) {
+    patient!.hn = hn;
+    return PatientEditingState(
+      patient: patient,
+    );
+  }
+
+  updateNote(String note) {
+    patient!.note = note;
+    return PatientEditingState(
+      patient: patient,
+    );
+  }
+
   @override
   List<Object?> get props => [
     patient,

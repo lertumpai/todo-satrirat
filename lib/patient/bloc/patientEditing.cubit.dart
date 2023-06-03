@@ -32,6 +32,16 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     emit(PatientEditingState(patient: patient));
   }
 
+  updatePatientHn(String hn) {
+    final updatedState = state.updateHn(hn);
+    emit(updatedState);
+  }
+
+  updatePatientNote(String note) {
+    final updatedState = state.updateNote(note);
+    emit(updatedState);
+  }
+
   save() async {
     await db?.writeTxn(() async {
       await patientRepo?.put(state.patient!);

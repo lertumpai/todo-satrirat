@@ -17,7 +17,10 @@ class Patient extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PatientEditablePage(index: patient.id)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PatientEditablePage(id: patient.id))
+        );
       },
       child: Container(
         decoration: BoxDecoration(

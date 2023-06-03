@@ -13,8 +13,8 @@ class PatientListCubit extends Cubit<PatientListState> {
 
   void getAll() async {
     final patients = await patientRepo?.where().findAll();
-    state.updatePatients(patients!);
-    emit(state);
+    final newState = state.updatePatients(patients!);
+    emit(newState);
   }
 
   void delete(int id) async {

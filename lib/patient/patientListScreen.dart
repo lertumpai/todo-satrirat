@@ -33,7 +33,9 @@ class _PatientListPageState extends State<PatientListPage> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PatientEditablePage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PatientEditablePage()));
               },
               icon: const Icon(Icons.add_card, size: 30
               )

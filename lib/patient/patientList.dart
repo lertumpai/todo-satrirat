@@ -10,7 +10,7 @@ class PatientList extends StatelessWidget {
   const PatientList({
     super.key,
     required this.patients,
-    required this.onDeletePatient
+    required this.onDeletePatient,
   });
 
   @override
