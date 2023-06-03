@@ -17,31 +17,29 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SettingsOption(
-              id: todo.id,
-              name: todo.name ?? "",
-              updateTodo: updateTodo
-          ),
-          SettingsDelete(
-              id: todo.id,
-              deleteTodo: deleteTodo
-          ),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SettingsTodo(
+            id: todo.id,
+            name: todo.name ?? "",
+            updateTodo: updateTodo
+        ),
+        SettingsDelete(
+            id: todo.id,
+            deleteTodo: deleteTodo
+        ),
+      ],
     );
   }
 }
 
-class SettingsOption extends StatefulWidget {
+class SettingsTodo extends StatefulWidget {
   final String name;
   final int id;
   final Function(int, String) updateTodo;
 
-  const SettingsOption({
+  const SettingsTodo({
     super.key,
     required this.name,
     required this.id,
@@ -49,10 +47,10 @@ class SettingsOption extends StatefulWidget {
   });
 
   @override
-  State<SettingsOption> createState() => _SettingsOptionState();
+  State<SettingsTodo> createState() => _SettingsTodoState();
 }
 
-class _SettingsOptionState extends State<SettingsOption> {
+class _SettingsTodoState extends State<SettingsTodo> {
   final debounceDuration = const Duration(milliseconds: 500);
   final debouncedFunction = null;
 
