@@ -23,7 +23,7 @@ class PatientManage extends StatelessWidget {
   }
 }
 
-class PatientSearch extends StatelessWidget {
+class PatientSearch extends StatefulWidget {
   final Function(String) onSearch;
 
   const PatientSearch({
@@ -32,17 +32,40 @@ class PatientSearch extends StatelessWidget {
   });
 
   @override
+  State<PatientSearch> createState() => _PatientSearchState();
+}
+
+class _PatientSearchState extends State<PatientSearch> {
+  final TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.text = "";
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(
       child: TextField(
         onChanged: (String v) {
-          onSearch(v);
+          widget.onSearch(searchController.text);
         },
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(
+        controller: searchController,
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))
           ),
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search),
+          suffixIcon: IconButton(
+              onPressed: () {
+                searchController.text = "";
+                widget.onSearch(searchController.text);
+              },
+              splashColor: Colors.white.withOpacity(0),
+              highlightColor: Colors.white.withOpacity(0),
+              icon: const Icon(Icons.cancel_outlined)
+          ),
           labelText: 'Search hn',
         ),
       ),

@@ -90,11 +90,11 @@ class PatientHn extends StatelessWidget {
                           overflow: TextOverflow.clip
                       ),
                       Text(
-                          "สร้างเมื่อ: ${Day.fromDateTime(patient.createdAt!).format("DD-MM-YYYY HH:mm")} [${patient.id}]",
+                          "สร้างเมื่อ: ${Day.fromDateTime(patient.createdAt!).format("DD/MM/YYYY HH:mm")} [${patient.id}]",
                           style: const TextStyle(fontSize: 12, color: Colors.black26)
                       ),
                       Text(
-                          "อัพเดตล่าสุด: ${Day.fromDateTime(patient.updatedAt!).format("DD-MM-YYYY HH:mm")}",
+                          "อัพเดตล่าสุด: ${Day.fromDateTime(patient.updatedAt!).format("DD/MM/YYYY HH:mm")}",
                           style: const TextStyle(fontSize: 12, color: Colors.black26)
                       ),
                     ],

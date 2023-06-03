@@ -70,19 +70,16 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     final updatedStatusSaving = state.updateStatus(PatientEditingStatusEnum.saving);
     emit(updatedStatusSaving);
     await db?.writeTxn(() async {
-      final isNew = state.patient!.id + 1 == Isar.minId;
       final patientId = await patientRepo?.put(state.patient!);
-      // if (isNew) {
-        await Future.wait(
-          state.todos!.map(
-            (todo) async {
-              final patientTodo = state.getPatientTodoByTodoId(todo.id);
-              patientTodo.patientId = patientId;
-              return patientTodoRepo?.put(patientTodo);
-            }
-          )
-        );
-      // }
+      await Future.wait(
+        state.todos!.map(
+          (todo) async {
+            final patientTodo = state.getPatientTodoByTodoId(todo.id);
+            patientTodo.patientId = patientId;
+            return patientTodoRepo?.put(patientTodo);
+          }
+        )
+      );
     });
     final updatedStatusSaved = state.updateStatus(PatientEditingStatusEnum.saved);
     emit(updatedStatusSaved);
