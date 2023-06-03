@@ -27,9 +27,19 @@ class SettingsCubit extends Cubit<TodoListType> {
     getAll();
   }
 
-  void delete(short id) async {
+  void delete(int id) async {
     await db?.writeTxn(() async {
       await todoRepo?.delete(id);
+    });
+    getAll();
+  }
+
+  void update(int id, String name) async {
+    print("update ${id}");
+    final todo = await todoRepo?.get(id);
+    todo?.name = name;
+    await db?.writeTxn(() async {
+      await todoRepo?.put(todo!);
     });
     getAll();
   }

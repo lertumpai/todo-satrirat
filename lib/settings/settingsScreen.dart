@@ -28,6 +28,9 @@ class _SettingsPageState extends State<SettingsPage> {
     void deleteTodo(int id) {
       context.read<SettingsCubit>().delete(id);
     }
+    void updateTodo(int id, String name) {
+      context.read<SettingsCubit>().update(id, name);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: [
           IconButton(
               onPressed: () {
-                createTodo("name:${DateTime.now().toIso8601String()}");
+                createTodo("");
               },
               icon: const Icon(Icons.add_card, size: 30)
           ),
@@ -50,7 +53,8 @@ class _SettingsPageState extends State<SettingsPage> {
               builder: (context, todos) {
                 return SettingsListPage(
                   todos: todos,
-                  deleteTodo: deleteTodo
+                  deleteTodo: deleteTodo,
+                  updateTodo: updateTodo
                 );
               }
             )

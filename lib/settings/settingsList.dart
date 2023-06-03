@@ -12,11 +12,13 @@ import 'bloc/settings.cubit.dart';
 class SettingsListPage extends StatelessWidget {
   final List<Todo> todos;
   final Function(int) deleteTodo;
+  final Function(int, String) updateTodo;
 
   const SettingsListPage({
     super.key,
     required this.todos,
     required this.deleteTodo,
+    required this.updateTodo,
   });
 
   @override
@@ -30,7 +32,11 @@ class SettingsListPage extends StatelessWidget {
             return const SizedBox(height: 1);
           }
 
-          return Settings(todo: todos[index], deleteTodo: deleteTodo);
+          return Settings(
+              todo: todos[index],
+              deleteTodo: deleteTodo,
+              updateTodo: updateTodo
+          );
         },
         separatorBuilder: (context, i) => const Divider(color: Colors.black54, thickness: 1.0),
         itemCount: todos.length + 1,
