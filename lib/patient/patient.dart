@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 
-class Patient extends StatelessWidget {
-  final int? index;
+import '../db/model/patient.dart';
 
-  const Patient({super.key, this.index = 0});
+class Patient extends StatelessWidget {
+  final PatientModel patient;
+  final Function(int) deletePatient;
+
+  const Patient({
+    super.key,
+    required this.patient,
+    required this.deletePatient
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => PatientEditablePage(index: index)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => PatientEditablePage(index: patient.id)));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -27,12 +34,18 @@ class Patient extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const PatientHn(),
+                  PatientHn(
+                      id: patient.id,
+                      hn: patient.hn!,
+                      deletePatient: deletePatient
+                  ),
                   Divider(
                     color: Colors.teal.shade200,
                     thickness: 2.0,
                   ),
-                  const PatientNote()
+                  PatientNote(
+                    note: patient.note!,
+                  )
                 ],
               )
             ),
@@ -44,7 +57,16 @@ class Patient extends StatelessWidget {
 }
 
 class PatientHn extends StatelessWidget {
-  const PatientHn({super.key});
+  final String hn;
+  final Function(int) deletePatient;
+  final int id;
+
+  const PatientHn({
+    super.key,
+    required this.hn,
+    required this.deletePatient,
+    required this.id,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,34 +77,36 @@ class PatientHn extends StatelessWidget {
           Column(
             children: [
               Row(
-                children: const [
-                  Icon(Icons.person, size: 30, color: Colors.black54),
-                  SizedBox(width: 5),
-                  Text("123456", style: TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.w600)),
+                children: [
+                  const Icon(Icons.person, size: 30, color: Colors.black54),
+                  const SizedBox(width: 5),
+                  Text(hn, style: const TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.w600)),
                 ],
               )
             ],
           ),
-          const PatientDeleteButton(),
+          PatientDeleteButton(id: id, deletePatient: deletePatient),
         ]
     );
   }
 }
 
 class PatientNote extends StatelessWidget {
-  const PatientNote({super.key});
+  final String note;
+
+  const PatientNote({super.key, required this.note});
 
   @override
   Widget build(BuildContext context) {
     return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Icon(Icons.sticky_note_2_outlined, size: 30, color: Colors.black54),
-          SizedBox(width: 5),
+        children: [
+          const Icon(Icons.sticky_note_2_outlined, size: 30, color: Colors.black54),
+          const SizedBox(width: 5),
           Flexible(
               child: Text(
-                  "สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า สวัสดีค่า",
-                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                  note,
+                  style: const TextStyle(fontSize: 18, color: Colors.black87),
                   overflow: TextOverflow.clip
               )
           )
@@ -92,7 +116,14 @@ class PatientNote extends StatelessWidget {
 }
 
 class PatientDeleteButton extends StatelessWidget {
-  const PatientDeleteButton({super.key});
+  final Function(int) deletePatient;
+  final int id;
+
+  const PatientDeleteButton({
+    super.key,
+    required this.deletePatient,
+    required this.id,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +131,9 @@ class PatientDeleteButton extends StatelessWidget {
       icon: const Icon(Icons.delete),
       color: Colors.red.shade500,
       iconSize: 30,
-      onPressed: () {},
+      onPressed: () {
+        deletePatient(id);
+      },
     );
   }
 }

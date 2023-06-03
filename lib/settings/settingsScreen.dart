@@ -22,13 +22,13 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    void createTodo(String name) {
+    void onCreateTodo(String name) {
       context.read<SettingsCubit>().create(name);
     }
-    void deleteTodo(int id) {
+    void onDeleteTodo(int id) {
       context.read<SettingsCubit>().delete(id);
     }
-    void updateTodo(int id, String name) {
+    void onUpdateTodo(int id, String name) {
       context.read<SettingsCubit>().update(id, name);
     }
 
@@ -38,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
         actions: [
           IconButton(
               onPressed: () {
-                createTodo("");
+                onCreateTodo("");
               },
               icon: const Icon(Icons.add_card, size: 30)
           ),
@@ -53,8 +53,8 @@ class _SettingsPageState extends State<SettingsPage> {
               builder: (context, todos) {
                 return SettingsListPage(
                   todos: todos,
-                  deleteTodo: deleteTodo,
-                  updateTodo: updateTodo
+                  onDeleteTodo: onDeleteTodo,
+                  onUpdateTodo: onUpdateTodo
                 );
               }
             )

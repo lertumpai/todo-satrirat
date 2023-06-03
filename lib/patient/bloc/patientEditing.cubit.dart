@@ -6,7 +6,7 @@ import '../../db/db.dart';
 
 class PatientEditingCubit extends Cubit<PatientEditingState> {
   final db = Database.instance;
-  final patientRepo = Database.instance?.collection<Patient>();
+  final patientRepo = Database.instance?.collection<PatientModel>();
 
   PatientEditingCubit() : super(const PatientEditingState());
 
@@ -15,13 +15,13 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
   }
 
   initPatientEditing(int? id) async {
-    Patient? patient;
+    PatientModel? patient;
 
     if (id != null) {
       patient = await patientRepo?.get(id);
     }
     else {
-      patient = Patient();
+      patient = PatientModel();
       final now = DateTime.now();
       patient.hn = "";
       patient.note = "";

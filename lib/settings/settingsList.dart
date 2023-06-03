@@ -10,15 +10,15 @@ import '../db/model/todo.dart';
 import 'bloc/settings.cubit.dart';
 
 class SettingsListPage extends StatelessWidget {
-  final List<Todo> todos;
-  final Function(int) deleteTodo;
-  final Function(int, String) updateTodo;
+  final List<TodoModel> todos;
+  final Function(int) onDeleteTodo;
+  final Function(int, String) onUpdateTodo;
 
   const SettingsListPage({
     super.key,
     required this.todos,
-    required this.deleteTodo,
-    required this.updateTodo,
+    required this.onDeleteTodo,
+    required this.onUpdateTodo,
   });
 
   @override
@@ -34,8 +34,8 @@ class SettingsListPage extends StatelessWidget {
 
           return Settings(
               todo: todos[index],
-              deleteTodo: deleteTodo,
-              updateTodo: updateTodo
+              onDeleteTodo: onDeleteTodo,
+              onUpdateTodo: onUpdateTodo
           );
         },
         separatorBuilder: (context, i) => const Divider(color: Colors.black54, thickness: 1.0),

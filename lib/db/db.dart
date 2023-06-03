@@ -12,8 +12,8 @@ class Database {
       final dir = await getApplicationDocumentsDirectory();
       final isar = await Isar.open(
           [
-            PatientSchema,
-            TodoSchema
+            PatientModelSchema,
+            TodoModelSchema
           ],
           directory: dir.path,
           maxSizeMiB: 1024 * 1,

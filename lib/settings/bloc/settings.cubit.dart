@@ -4,11 +4,11 @@ import 'package:isar/isar.dart';
 import '../../db/db.dart';
 import '../../db/model/todo.dart';
 
-typedef TodoListType = List<Todo>;
+typedef TodoListType = List<TodoModel>;
 
 class SettingsCubit extends Cubit<TodoListType> {
   final db = Database.instance;
-  final todoRepo = Database.instance?.collection<Todo>();
+  final todoRepo = Database.instance?.collection<TodoModel>();
 
   SettingsCubit() : super(const []);
 
@@ -18,7 +18,7 @@ class SettingsCubit extends Cubit<TodoListType> {
   }
 
   void create(String name) async {
-    final todo = Todo();
+    final todo = TodoModel();
     todo.name = name;
     todo.sequence = 0;
     await db?.writeTxn(() async {

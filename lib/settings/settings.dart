@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import '../db/model/todo.dart';
 
 class Settings extends StatelessWidget {
-  final Todo todo;
-  final Function(int) deleteTodo;
-  final Function(int, String) updateTodo;
+  final TodoModel todo;
+  final Function(int) onDeleteTodo;
+  final Function(int, String) onUpdateTodo;
 
   const Settings({
     super.key,
     required this.todo,
-    required this.deleteTodo,
-    required this.updateTodo,
+    required this.onDeleteTodo,
+    required this.onUpdateTodo,
   });
 
   @override
@@ -23,11 +23,11 @@ class Settings extends StatelessWidget {
         SettingsTodo(
             id: todo.id,
             name: todo.name ?? "",
-            updateTodo: updateTodo
+            updateTodo: onUpdateTodo
         ),
         SettingsDelete(
             id: todo.id,
-            deleteTodo: deleteTodo
+            deleteTodo: onDeleteTodo
         ),
       ],
     );

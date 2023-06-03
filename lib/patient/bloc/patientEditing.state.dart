@@ -3,13 +3,13 @@ import 'package:equatable/equatable.dart';
 import '../../db/model/patient.dart';
 
 class PatientEditingState extends Equatable {
-  final Patient? patient;
+  final PatientModel? patient;
 
   const PatientEditingState({
     this.patient
   });
 
-  updatePatient(Patient patient) {
+  updatePatient(PatientModel patient) {
     return PatientEditingState(
       patient: patient,
     );

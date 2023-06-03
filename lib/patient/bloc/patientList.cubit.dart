@@ -7,21 +7,21 @@ import '../../db/db.dart';
 
 class PatientListCubit extends Cubit<PatientListState> {
   final db = Database.instance;
-  final patientRepo = Database.instance?.collection<Patient>();
+  final patientRepo = Database.instance?.collection<PatientModel>();
 
   PatientListCubit() : super(const PatientListState(patients: []));
 
-  void getAllPatient() async {
+  void getAll() async {
     final patients = await patientRepo?.where().findAll();
     state.updatePatients(patients!);
     emit(state);
   }
 
-  void deletePatient(int id) async {
+  void delete(int id) async {
     await db?.writeTxn(() async {
       await patientRepo?.delete(id);
     });
 
-    getAllPatient();
+    getAll();
   }
 }

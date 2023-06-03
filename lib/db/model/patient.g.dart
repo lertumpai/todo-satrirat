@@ -9,13 +9,13 @@ part of 'patient.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetPatientCollection on Isar {
-  IsarCollection<Patient> get patients => this.collection();
+extension GetPatientModelCollection on Isar {
+  IsarCollection<PatientModel> get patientModels => this.collection();
 }
 
-const PatientSchema = CollectionSchema(
-  name: r'Patient',
-  id: -3057427754190339924,
+const PatientModelSchema = CollectionSchema(
+  name: r'PatientModel',
+  id: -4815107763863632792,
   properties: {
     r'createdAt': PropertySchema(
       id: 0,
@@ -38,10 +38,10 @@ const PatientSchema = CollectionSchema(
       type: IsarType.dateTime,
     )
   },
-  estimateSize: _patientEstimateSize,
-  serialize: _patientSerialize,
-  deserialize: _patientDeserialize,
-  deserializeProp: _patientDeserializeProp,
+  estimateSize: _patientModelEstimateSize,
+  serialize: _patientModelSerialize,
+  deserialize: _patientModelDeserialize,
+  deserializeProp: _patientModelDeserializeProp,
   idName: r'id',
   indexes: {
     r'hn': IndexSchema(
@@ -60,14 +60,14 @@ const PatientSchema = CollectionSchema(
   },
   links: {},
   embeddedSchemas: {},
-  getId: _patientGetId,
-  getLinks: _patientGetLinks,
-  attach: _patientAttach,
+  getId: _patientModelGetId,
+  getLinks: _patientModelGetLinks,
+  attach: _patientModelAttach,
   version: '3.1.0',
 );
 
-int _patientEstimateSize(
-  Patient object,
+int _patientModelEstimateSize(
+  PatientModel object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -87,8 +87,8 @@ int _patientEstimateSize(
   return bytesCount;
 }
 
-void _patientSerialize(
-  Patient object,
+void _patientModelSerialize(
+  PatientModel object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -99,13 +99,13 @@ void _patientSerialize(
   writer.writeDateTime(offsets[3], object.updatedAt);
 }
 
-Patient _patientDeserialize(
+PatientModel _patientModelDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Patient();
+  final object = PatientModel();
   object.createdAt = reader.readDateTimeOrNull(offsets[0]);
   object.hn = reader.readStringOrNull(offsets[1]);
   object.id = id;
@@ -114,7 +114,7 @@ Patient _patientDeserialize(
   return object;
 }
 
-P _patientDeserializeProp<P>(
+P _patientModelDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -134,26 +134,28 @@ P _patientDeserializeProp<P>(
   }
 }
 
-Id _patientGetId(Patient object) {
+Id _patientModelGetId(PatientModel object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _patientGetLinks(Patient object) {
+List<IsarLinkBase<dynamic>> _patientModelGetLinks(PatientModel object) {
   return [];
 }
 
-void _patientAttach(IsarCollection<dynamic> col, Id id, Patient object) {
+void _patientModelAttach(
+    IsarCollection<dynamic> col, Id id, PatientModel object) {
   object.id = id;
 }
 
-extension PatientQueryWhereSort on QueryBuilder<Patient, Patient, QWhere> {
-  QueryBuilder<Patient, Patient, QAfterWhere> anyId() {
+extension PatientModelQueryWhereSort
+    on QueryBuilder<PatientModel, PatientModel, QWhere> {
+  QueryBuilder<PatientModel, PatientModel, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhere> anyHn() {
+  QueryBuilder<PatientModel, PatientModel, QAfterWhere> anyHn() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'hn'),
@@ -162,8 +164,9 @@ extension PatientQueryWhereSort on QueryBuilder<Patient, Patient, QWhere> {
   }
 }
 
-extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
-  QueryBuilder<Patient, Patient, QAfterWhereClause> idEqualTo(Id id) {
+extension PatientModelQueryWhere
+    on QueryBuilder<PatientModel, PatientModel, QWhereClause> {
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -172,7 +175,8 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> idNotEqualTo(
+      Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -194,7 +198,8 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> idGreaterThan(Id id,
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> idGreaterThan(
+      Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -203,7 +208,7 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> idLessThan(Id id,
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> idLessThan(Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -212,7 +217,7 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> idBetween(
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -228,7 +233,7 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> hnIsNull() {
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> hnIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
         indexName: r'hn',
@@ -237,7 +242,7 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> hnIsNotNull() {
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> hnIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
         indexName: r'hn',
@@ -248,7 +253,8 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> hnEqualTo(String? hn) {
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> hnEqualTo(
+      String? hn) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
         indexName: r'hn',
@@ -257,7 +263,8 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> hnNotEqualTo(String? hn) {
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> hnNotEqualTo(
+      String? hn) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -291,7 +298,7 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> hnGreaterThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> hnGreaterThan(
     String? hn, {
     bool include = false,
   }) {
@@ -305,7 +312,7 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> hnLessThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> hnLessThan(
     String? hn, {
     bool include = false,
   }) {
@@ -319,7 +326,7 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> hnBetween(
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> hnBetween(
     String? lowerHn,
     String? upperHn, {
     bool includeLower = true,
@@ -336,7 +343,7 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> hnStartsWith(
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> hnStartsWith(
       String HnPrefix) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
@@ -347,7 +354,7 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> hnIsEmpty() {
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> hnIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
         indexName: r'hn',
@@ -356,7 +363,7 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterWhereClause> hnIsNotEmpty() {
+  QueryBuilder<PatientModel, PatientModel, QAfterWhereClause> hnIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -383,9 +390,10 @@ extension PatientQueryWhere on QueryBuilder<Patient, Patient, QWhereClause> {
   }
 }
 
-extension PatientQueryFilter
-    on QueryBuilder<Patient, Patient, QFilterCondition> {
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> createdAtIsNull() {
+extension PatientModelQueryFilter
+    on QueryBuilder<PatientModel, PatientModel, QFilterCondition> {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdAtIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'createdAt',
@@ -393,7 +401,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> createdAtIsNotNull() {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdAtIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'createdAt',
@@ -401,8 +410,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> createdAtEqualTo(
-      DateTime? value) {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdAtEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'createdAt',
@@ -411,7 +420,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> createdAtGreaterThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdAtGreaterThan(
     DateTime? value, {
     bool include = false,
   }) {
@@ -424,7 +434,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> createdAtLessThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdAtLessThan(
     DateTime? value, {
     bool include = false,
   }) {
@@ -437,7 +448,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> createdAtBetween(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdAtBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
@@ -454,7 +466,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnIsNull() {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> hnIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'hn',
@@ -462,7 +474,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnIsNotNull() {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      hnIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'hn',
@@ -470,7 +483,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnEqualTo(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> hnEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -483,7 +496,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnGreaterThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> hnGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -498,7 +511,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnLessThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> hnLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -513,7 +526,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnBetween(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> hnBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -532,7 +545,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnStartsWith(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> hnStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -545,7 +558,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnEndsWith(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> hnEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -558,7 +571,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnContains(String value,
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> hnContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -569,7 +583,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnMatches(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> hnMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -581,7 +595,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnIsEmpty() {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> hnIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'hn',
@@ -590,7 +604,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> hnIsNotEmpty() {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      hnIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'hn',
@@ -599,7 +614,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> idEqualTo(Id value) {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> idEqualTo(
+      Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -608,7 +624,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> idGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -621,7 +637,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> idLessThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> idLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -634,7 +650,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> idBetween(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -651,7 +667,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteIsNull() {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> noteIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'note',
@@ -659,7 +675,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteIsNotNull() {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      noteIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'note',
@@ -667,7 +684,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteEqualTo(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> noteEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -680,7 +697,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteGreaterThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      noteGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -695,7 +713,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteLessThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> noteLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -710,7 +728,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteBetween(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> noteBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -729,7 +747,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteStartsWith(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      noteStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -742,7 +761,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteEndsWith(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> noteEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -755,7 +774,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteContains(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> noteContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -767,7 +786,7 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteMatches(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> noteMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -779,7 +798,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteIsEmpty() {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      noteIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'note',
@@ -788,7 +808,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> noteIsNotEmpty() {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      noteIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'note',
@@ -797,7 +818,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> updatedAtIsNull() {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      updatedAtIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'updatedAt',
@@ -805,7 +827,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> updatedAtIsNotNull() {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      updatedAtIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'updatedAt',
@@ -813,8 +836,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> updatedAtEqualTo(
-      DateTime? value) {
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      updatedAtEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'updatedAt',
@@ -823,7 +846,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> updatedAtGreaterThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      updatedAtGreaterThan(
     DateTime? value, {
     bool include = false,
   }) {
@@ -836,7 +860,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> updatedAtLessThan(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      updatedAtLessThan(
     DateTime? value, {
     bool include = false,
   }) {
@@ -849,7 +874,8 @@ extension PatientQueryFilter
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterFilterCondition> updatedAtBetween(
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      updatedAtBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
@@ -867,181 +893,182 @@ extension PatientQueryFilter
   }
 }
 
-extension PatientQueryObject
-    on QueryBuilder<Patient, Patient, QFilterCondition> {}
+extension PatientModelQueryObject
+    on QueryBuilder<PatientModel, PatientModel, QFilterCondition> {}
 
-extension PatientQueryLinks
-    on QueryBuilder<Patient, Patient, QFilterCondition> {}
+extension PatientModelQueryLinks
+    on QueryBuilder<PatientModel, PatientModel, QFilterCondition> {}
 
-extension PatientQuerySortBy on QueryBuilder<Patient, Patient, QSortBy> {
-  QueryBuilder<Patient, Patient, QAfterSortBy> sortByCreatedAt() {
+extension PatientModelQuerySortBy
+    on QueryBuilder<PatientModel, PatientModel, QSortBy> {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> sortByCreatedAtDesc() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> sortByHn() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> sortByHn() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hn', Sort.asc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> sortByHnDesc() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> sortByHnDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hn', Sort.desc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> sortByNote() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> sortByNote() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'note', Sort.asc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> sortByNoteDesc() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> sortByNoteDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'note', Sort.desc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> sortByUpdatedAt() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> sortByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> sortByUpdatedAtDesc() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> sortByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 }
 
-extension PatientQuerySortThenBy
-    on QueryBuilder<Patient, Patient, QSortThenBy> {
-  QueryBuilder<Patient, Patient, QAfterSortBy> thenByCreatedAt() {
+extension PatientModelQuerySortThenBy
+    on QueryBuilder<PatientModel, PatientModel, QSortThenBy> {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> thenByCreatedAtDesc() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> thenByHn() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByHn() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hn', Sort.asc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> thenByHnDesc() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByHnDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hn', Sort.desc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> thenById() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> thenByNote() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByNote() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'note', Sort.asc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> thenByNoteDesc() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByNoteDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'note', Sort.desc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> thenByUpdatedAt() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Patient, Patient, QAfterSortBy> thenByUpdatedAtDesc() {
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 }
 
-extension PatientQueryWhereDistinct
-    on QueryBuilder<Patient, Patient, QDistinct> {
-  QueryBuilder<Patient, Patient, QDistinct> distinctByCreatedAt() {
+extension PatientModelQueryWhereDistinct
+    on QueryBuilder<PatientModel, PatientModel, QDistinct> {
+  QueryBuilder<PatientModel, PatientModel, QDistinct> distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
     });
   }
 
-  QueryBuilder<Patient, Patient, QDistinct> distinctByHn(
+  QueryBuilder<PatientModel, PatientModel, QDistinct> distinctByHn(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'hn', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Patient, Patient, QDistinct> distinctByNote(
+  QueryBuilder<PatientModel, PatientModel, QDistinct> distinctByNote(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'note', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Patient, Patient, QDistinct> distinctByUpdatedAt() {
+  QueryBuilder<PatientModel, PatientModel, QDistinct> distinctByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'updatedAt');
     });
   }
 }
 
-extension PatientQueryProperty
-    on QueryBuilder<Patient, Patient, QQueryProperty> {
-  QueryBuilder<Patient, int, QQueryOperations> idProperty() {
+extension PatientModelQueryProperty
+    on QueryBuilder<PatientModel, PatientModel, QQueryProperty> {
+  QueryBuilder<PatientModel, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<Patient, DateTime?, QQueryOperations> createdAtProperty() {
+  QueryBuilder<PatientModel, DateTime?, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
   }
 
-  QueryBuilder<Patient, String?, QQueryOperations> hnProperty() {
+  QueryBuilder<PatientModel, String?, QQueryOperations> hnProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'hn');
     });
   }
 
-  QueryBuilder<Patient, String?, QQueryOperations> noteProperty() {
+  QueryBuilder<PatientModel, String?, QQueryOperations> noteProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'note');
     });
   }
 
-  QueryBuilder<Patient, DateTime?, QQueryOperations> updatedAtProperty() {
+  QueryBuilder<PatientModel, DateTime?, QQueryOperations> updatedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'updatedAt');
     });

@@ -3,7 +3,7 @@ import 'package:isar/isar.dart';
 part 'todo.g.dart';
 
 @collection
-class Todo {
+class TodoModel {
   Id id = Isar.autoIncrement;
 
   String? name;
