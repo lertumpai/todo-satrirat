@@ -8,40 +8,40 @@ enum PatientEditingStatusEnum { init, ready, loading, saving, saved }
 
 class PatientEditingState extends Equatable {
   final PatientModel? patient;
-  final List<PatientTodoModel>? patientTodo;
-  final List<TodoModel>? todo;
+  final List<PatientTodoModel>? patientTodos;
+  final List<TodoModel>? todos;
   final PatientEditingStatusEnum status;
 
   const PatientEditingState({
     this.patient,
     this.status = PatientEditingStatusEnum.init,
-    this.patientTodo = const [],
-    this.todo = const [],
+    this.patientTodos = const [],
+    this.todos = const [],
   });
 
   PatientEditingState copyWith({
     PatientModel? patient,
-    List<PatientTodoModel>? patientTodo,
-    List<TodoModel>? todo,
+    List<PatientTodoModel>? patientTodos,
+    List<TodoModel>? todos,
     PatientEditingStatusEnum? status
   }) {
     return PatientEditingState(
       patient: patient ?? this.patient,
-      patientTodo: patientTodo ?? this.patientTodo,
-      todo: todo ?? this.todo,
+      patientTodos: patientTodos ?? this.patientTodos,
+      todos: todos ?? this.todos,
       status: status ?? this.status,
     );
   }
 
   PatientEditingState initPatient({
     required PatientModel patient,
-    required List<PatientTodoModel> patientTodo,
-    required List<TodoModel> todo
+    required List<PatientTodoModel> patientTodos,
+    required List<TodoModel> todos
   }) {
     return copyWith(
       patient: patient,
-      patientTodo: patientTodo,
-      todo: todo,
+      patientTodos: patientTodos,
+      todos: todos,
     );
   }
 
@@ -63,6 +63,10 @@ class PatientEditingState extends Equatable {
 
   PatientEditingState updateStatus(PatientEditingStatusEnum status) {
     return copyWith(status: status);
+  }
+
+  PatientTodoModel getPatientTodoByTodoId(int todoId) {
+    return patientTodos!.firstWhere((patientTodo) => patientTodo.todoId == todoId);
   }
 
   @override

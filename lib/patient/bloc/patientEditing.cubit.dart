@@ -34,13 +34,25 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
       patient.updatedAt = now;
     }
 
-    final updatedState = state
-        .initPatient(
+    final todos = await todoRepo?.where().findAll();
+    List<PatientTodoModel> patientTodos = (await patientTodoRepo?.filter().patientIdEqualTo(id).findAll())!;
+
+    if (patientTodos.isEmpty) {
+      patientTodos = todos!.map((TodoModel todo) {
+        final patientTodo = PatientTodoModel();
+        patientTodo.done = false;
+        patientTodo.todoId = todo.id;
+        return patientTodo;
+      }).toList();
+    }
+
+    final updatedState = state.initPatient(
       patient: patient!,
-      patientTodo: const [],
-      todo: const [],
-    )
-        .updateStatus(PatientEditingStatusEnum.ready);
+      patientTodos: patientTodos!,
+      todos: todos!,
+    ).updateStatus(
+        PatientEditingStatusEnum.ready
+    );
     emit(updatedState);
   }
 
@@ -59,21 +71,18 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     emit(updatedStatusSaving);
     await db?.writeTxn(() async {
       final isNew = state.patient!.id + 1 == Isar.minId;
-      final id = await patientRepo?.put(state.patient!);
-      if (isNew) {
-        final todos = await todoRepo?.where().findAll();
+      final patientId = await patientRepo?.put(state.patient!);
+      // if (isNew) {
         await Future.wait(
-            todos!.map(
-                    (todo) async {
-                  final patientTodo = PatientTodoModel();
-                  patientTodo.done = false;
-                  patientTodo.patientId = id;
-                  patientTodo.todoId = todo.id;
-                  return patientTodoRepo?.put(patientTodo);
-                }
-            )
+          state.todos!.map(
+            (todo) async {
+              final patientTodo = state.getPatientTodoByTodoId(todo.id);
+              patientTodo.patientId = patientId;
+              return patientTodoRepo?.put(patientTodo);
+            }
+          )
         );
-      }
+      // }
     });
     final updatedStatusSaved = state.updateStatus(PatientEditingStatusEnum.saved);
     emit(updatedStatusSaved);
