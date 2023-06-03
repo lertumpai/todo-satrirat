@@ -16,18 +16,16 @@ class PatientEditable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          PatientNote(
-            patient: patient,
-            onHnChange: onHnChange,
-            onNoteChange: onNoteChange,
-          ),
-          const SizedBox(height: 15),
-          const PatientToggleList(),
-        ],
-      ),
+    return Column(
+      children: [
+        PatientNote(
+          patient: patient,
+          onHnChange: onHnChange,
+          onNoteChange: onNoteChange,
+        ),
+        const SizedBox(height: 15),
+        const PatientToggleList(),
+      ],
     );
   }
 }
