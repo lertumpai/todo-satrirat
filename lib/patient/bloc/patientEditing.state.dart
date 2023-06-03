@@ -4,7 +4,7 @@ import 'package:todo_satrirat/db/model/todo.dart';
 
 import '../../db/model/patient.dart';
 
-enum PatientEditingStatusEnum { init, ready, loading, saving, saved }
+enum PatientEditingStatusEnum { init, ready, loading, saving, saved, toggle }
 
 class PatientEditingState extends Equatable {
   final PatientModel? patient;

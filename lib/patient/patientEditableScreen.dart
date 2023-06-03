@@ -55,9 +55,6 @@ class _PatientEditablePageState extends State<PatientEditablePage> {
         ],
       ),
       body: BlocConsumer<PatientEditingCubit, PatientEditingState>(
-        listenWhen: (prev, cur) {
-          return cur.patient != null;
-        },
         listener: (context, state) {
           if (state.status == PatientEditingStatusEnum.saved) {
             Navigator.pop(context);
