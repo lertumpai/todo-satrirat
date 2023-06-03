@@ -17,8 +17,8 @@ class PatientListPage extends StatefulWidget {
 class _PatientListPageState extends State<PatientListPage> {
   @override
   void initState() {
-    super.initState();
     context.read<PatientListCubit>().getAll();
+    super.initState();
   }
 
   @override

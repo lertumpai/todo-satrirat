@@ -108,8 +108,8 @@ class PatientNote extends StatelessWidget {
           const SizedBox(width: 5),
           Flexible(
               child: Text(
-                  note,
-                  style: const TextStyle(fontSize: 18, color: Colors.black87),
+                  note != "" ? note : "ไม่มีการบันทึก",
+                  style: const TextStyle(fontSize: 20, color: Colors.black87),
                   overflow: TextOverflow.clip
               )
           )

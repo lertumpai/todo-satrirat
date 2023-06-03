@@ -18,6 +18,7 @@ class PatientListCubit extends Cubit<PatientListState> {
   }
 
   void getAll() async {
+    loading();
     final patients = await patientRepo?.where().findAll();
     final newState = state
         .updatePatients(patients!)
