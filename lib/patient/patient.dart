@@ -85,13 +85,20 @@ class PatientHn extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.person, size: 30, color: Colors.black54),
+                  const Icon(Icons.person, size: 40, color: Colors.black54),
                   const SizedBox(width: 5),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(hn, style: const TextStyle(fontSize: 24, color: Colors.black87, fontWeight: FontWeight.w600)),
-                      Text("[$id] ${Day.fromDateTime(updatedAt).format("DD-MM-YYYY HH:mm")}", style: const TextStyle(fontSize: 16, color: Colors.black26)),
+                      Text(
+                          hn,
+                          style: const TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.w600),
+                          overflow: TextOverflow.clip
+                      ),
+                      Text(
+                          "${Day.fromDateTime(updatedAt).format("DD-MM-YYYY HH:mm")} [$id]",
+                          style: const TextStyle(fontSize: 14, color: Colors.black26)
+                      ),
                     ],
                   )
                 ],
@@ -114,7 +121,7 @@ class PatientNote extends StatelessWidget {
     return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.sticky_note_2_outlined, size: 30, color: Colors.black54),
+          const Icon(Icons.sticky_note_2_outlined, size: 40, color: Colors.black54),
           const SizedBox(width: 5),
           Flexible(
               child: Text(
