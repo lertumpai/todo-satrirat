@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 import 'package:todo_satrirat/patient/patientListScreen.dart';
 import 'package:todo_satrirat/settings/settingsScreen.dart';
