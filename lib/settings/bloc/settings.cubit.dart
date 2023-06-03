@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:isar/isar.dart';
 
 import '../../db/db.dart';
+import '../../db/model/patientTodo.dart';
 import '../../db/model/todo.dart';
 
 typedef TodoListType = List<TodoModel>;
@@ -9,6 +10,7 @@ typedef TodoListType = List<TodoModel>;
 class SettingsCubit extends Cubit<TodoListType> {
   final db = Database.instance;
   final todoRepo = Database.instance?.collection<TodoModel>();
+  final patientTodoRepo = Database.instance?.collection<PatientTodoModel>();
 
   SettingsCubit() : super(const []);
 
@@ -30,12 +32,14 @@ class SettingsCubit extends Cubit<TodoListType> {
   void delete(int id) async {
     await db?.writeTxn(() async {
       await todoRepo?.delete(id);
+      final patientTodos = await patientTodoRepo?.filter().todoIdEqualTo(id).findAll();
+      final patientTodoIds = patientTodos!.map((patientTodo) => patientTodo.id).toList();
+      await patientTodoRepo?.deleteAll(patientTodoIds);
     });
     getAll();
   }
 
   void update(int id, String name) async {
-    print("update ${id}");
     final todo = await todoRepo?.get(id);
     todo?.name = name;
     await db?.writeTxn(() async {
