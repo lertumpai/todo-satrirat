@@ -2,6 +2,7 @@ import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'model/patient.dart';
+import 'model/todo.dart';
 
 class Database {
   static Isar? _instance;
@@ -10,7 +11,10 @@ class Database {
     if (_instance == null) {
       final dir = await getApplicationDocumentsDirectory();
       final isar = await Isar.open(
-          [PatientSchema],
+          [
+            PatientSchema,
+            TodoSchema
+          ],
           directory: dir.path,
           maxSizeMiB: 1024 * 1,
           name: "todo_satrirat"

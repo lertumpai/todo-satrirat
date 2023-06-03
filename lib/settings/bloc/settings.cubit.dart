@@ -4,7 +4,9 @@ import 'package:isar/isar.dart';
 import '../../db/db.dart';
 import '../../db/model/todo.dart';
 
-class SettingsCubit extends Cubit<List<Todo>> {
+typedef TodoListType = List<Todo>;
+
+class SettingsCubit extends Cubit<TodoListType> {
   final todoRepo = Database.instance?.collection<Todo>();
 
   SettingsCubit() : super(const []);

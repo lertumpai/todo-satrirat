@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 import 'package:todo_satrirat/patient/patientListScreen.dart';
+import 'package:todo_satrirat/settings/bloc/settings.cubit.dart';
 import 'package:todo_satrirat/settings/settingsScreen.dart';
 
 import 'db/db.dart';
@@ -18,18 +20,25 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'แอพหมูอ้วง',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SettingsCubit>(
+          create: (BuildContext context) => SettingsCubit(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'แอพหมูอ้วง',
+        theme: ThemeData(
+          primarySwatch: Colors.teal,
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const MyHomePage(),
+          '/patient-list': (context) => const PatientListPage(),
+          '/patient': (context) => const PatientEditablePage(),
+          '/settings': (context) => const SettingsPage(),
+        },
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MyHomePage(),
-        '/patient-list': (context) => const PatientListPage(),
-        '/patient': (context) => const PatientEditablePage(),
-        '/settings': (context) => const SettingsPage(),
-      },
     );
   }
 }
