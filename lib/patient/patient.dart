@@ -1,3 +1,4 @@
+import 'package:day/day.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 
@@ -40,6 +41,7 @@ class Patient extends StatelessWidget {
                   PatientHn(
                       id: patient.id,
                       hn: patient.hn!,
+                      updatedAt: patient.updatedAt!,
                       deletePatient: deletePatient
                   ),
                   Divider(
@@ -63,12 +65,14 @@ class PatientHn extends StatelessWidget {
   final String hn;
   final Function(int) deletePatient;
   final int id;
+  final DateTime updatedAt;
 
   const PatientHn({
     super.key,
     required this.hn,
     required this.deletePatient,
     required this.id,
+    required this.updatedAt,
   });
 
   @override
@@ -83,7 +87,8 @@ class PatientHn extends StatelessWidget {
                 children: [
                   const Icon(Icons.person, size: 30, color: Colors.black54),
                   const SizedBox(width: 5),
-                  Text(hn, style: const TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.w600)),
+                  Text(hn, style: const TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.w700)),
+                  Text(" (${Day.fromDateTime(updatedAt).format("DD-MM-YYYY HH:mm")})", style: const TextStyle(fontSize: 20, color: Colors.black26)),
                 ],
               )
             ],
