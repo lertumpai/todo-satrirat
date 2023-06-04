@@ -33,9 +33,9 @@ class PatientEditable extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         PatientToggleList(
-            patientTodos: patientTodos,
-            todos: todos,
-            onTogglePatientTodo: onTogglePatientTodo,
+          patientTodos: patientTodos,
+          todos: todos,
+          onTogglePatientTodo: onTogglePatientTodo,
         ),
       ],
     );
@@ -86,15 +86,12 @@ class _PatientNoteState extends State<PatientNote> {
                   style: const TextStyle(fontSize: 20),
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.teal.shade200,
-                            width: 1.5
-                        ),
-                        borderRadius: const BorderRadius.all(Radius.circular(20))
-                    ),
+                        borderSide:
+                            BorderSide(color: Colors.teal.shade200, width: 1.5),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20))),
                     border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))
-                    ),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
                   ),
                 ),
               ),
@@ -105,7 +102,8 @@ class _PatientNoteState extends State<PatientNote> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(Icons.sticky_note_2_outlined, size: 50, color: Colors.black54),
+            const Icon(Icons.sticky_note_2_outlined,
+                size: 50, color: Colors.black54),
             const SizedBox(width: 5),
             Expanded(
               child: Padding(
@@ -118,15 +116,12 @@ class _PatientNoteState extends State<PatientNote> {
                   onChanged: widget.onNoteChange,
                   decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.teal.shade200,
-                            width: 1.5
-                        ),
-                        borderRadius: const BorderRadius.all(Radius.circular(20))
-                    ),
+                        borderSide:
+                            BorderSide(color: Colors.teal.shade200, width: 1.5),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20))),
                     border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))
-                    ),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
                   ),
                 ),
               ),
@@ -162,7 +157,9 @@ class PatientToggleList extends StatelessWidget {
           }
 
           return PatientToggle(
-            name: todos.firstWhere((todo) => todo.id == patientTodos[index].todoId).name!,
+            name: todos
+                .firstWhere((todo) => todo.id == patientTodos[index].todoId)
+                .name!,
             patientTodo: patientTodos[index],
             onTogglePatientTodo: onTogglePatientTodo,
           );
@@ -204,11 +201,10 @@ class PatientToggle extends StatelessWidget {
         const SizedBox(width: 5),
         Flexible(
             child: Text(
-                name,
-                style: const TextStyle(fontSize: 20),
-                overflow: TextOverflow.clip,
-            )
-        )
+          name,
+          style: const TextStyle(fontSize: 20),
+          overflow: TextOverflow.clip,
+        ))
       ],
     );
   }
