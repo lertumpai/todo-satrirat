@@ -31,51 +31,56 @@ class _PatientEditablePageState extends State<PatientEditablePage> {
     void onSave() {
       context.read<PatientEditingCubit>().save();
     }
+
     void onHnChange(String hn) {
       context.read<PatientEditingCubit>().updatePatientHn(hn);
     }
+
     void onNoteChange(String note) {
       context.read<PatientEditingCubit>().updatePatientNote(note);
     }
+
     void onTogglePatientTodo(int todoId) {
       context.read<PatientEditingCubit>().toggleDoneByTodoId(todoId);
     }
 
+    void onAddTodoList(List<int> todoIds) {
+      context.read<PatientEditingCubit>().addTodoList(todoIds);
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('App หมูอ้วงบันทึกงาน'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                onSave();
-              },
-              icon: const Icon(Icons.save)
-          ),
-          const SizedBox(width: 10),
-        ],
-      ),
-      body: BlocConsumer<PatientEditingCubit, PatientEditingState>(
-        listener: (context, state) {
+        appBar: AppBar(
+          title: const Text('App หมูอ้วงบันทึกงาน'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  onSave();
+                },
+                icon: const Icon(Icons.save)),
+            const SizedBox(width: 10),
+          ],
+        ),
+        body: BlocConsumer<PatientEditingCubit, PatientEditingState>(
+            listener: (context, state) {
           if (state.status == PatientEditingStatusEnum.saved) {
             Navigator.pop(context);
             context.read<PatientListCubit>().loading();
           }
-        },
-        builder: (context, state) {
+        }, builder: (context, state) {
           return state.patient != null
               ? Container(
-            padding: const EdgeInsets.all(10),
-            child: PatientEditable(
-              patient: state.patient!,
-              patientTodos: state.patientTodos,
-              todos: state.todos,
-              onTogglePatientTodo: onTogglePatientTodo,
-              onHnChange: onHnChange,
-              onNoteChange: onNoteChange,
-            ),
-          ) : const SizedBox();
-        }
-      )
-    );
+                  padding: const EdgeInsets.all(10),
+                  child: PatientEditable(
+                    patient: state.patient!,
+                    patientTodos: state.patientTodos,
+                    todos: state.todos,
+                    onTogglePatientTodo: onTogglePatientTodo,
+                    onHnChange: onHnChange,
+                    onNoteChange: onNoteChange,
+                    onAddTodoList: onAddTodoList,
+                  ),
+                )
+              : const SizedBox();
+        }));
   }
 }

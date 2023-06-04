@@ -11,6 +11,7 @@ class PatientEditable extends StatelessWidget {
   final Function(int) onTogglePatientTodo;
   final Function(String) onHnChange;
   final Function(String) onNoteChange;
+  final Function(List<int> todoIds) onAddTodoList;
 
   const PatientEditable({
     super.key,
@@ -20,6 +21,7 @@ class PatientEditable extends StatelessWidget {
     required this.onTogglePatientTodo,
     required this.onHnChange,
     required this.onNoteChange,
+    required this.onAddTodoList,
   });
 
   @override
@@ -35,6 +37,7 @@ class PatientEditable extends StatelessWidget {
         PatientToggleList(
           patientTodos: patientTodos,
           todos: todos,
+          onAddTodoList: onAddTodoList,
           onTogglePatientTodo: onTogglePatientTodo,
         ),
       ],
@@ -137,12 +140,14 @@ class PatientToggleList extends StatelessWidget {
   final List<PatientTodoModel> patientTodos;
   final List<TodoModel> todos;
   final Function(int) onTogglePatientTodo;
+  final Function(List<int> todoIds) onAddTodoList;
 
   const PatientToggleList({
     super.key,
     required this.todos,
     required this.patientTodos,
     required this.onTogglePatientTodo,
+    required this.onAddTodoList,
   });
 
   @override
