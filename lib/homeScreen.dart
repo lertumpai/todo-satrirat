@@ -29,7 +29,9 @@ class MyHomePage extends StatelessWidget {
                             },
                           style: const ButtonStyle(
                               padding: MaterialStatePropertyAll(
-                                  EdgeInsets.symmetric(vertical: 18))),
+                                  EdgeInsets.symmetric(vertical: 18)
+                              )
+                          ),
                           child: const Text(
                             'Patient list',
                             style: TextStyle(fontSize: 18),
@@ -49,7 +51,9 @@ class MyHomePage extends StatelessWidget {
                           },
                           style: const ButtonStyle(
                               padding: MaterialStatePropertyAll(
-                                  EdgeInsets.symmetric(vertical: 18))),
+                                  EdgeInsets.symmetric(vertical: 18)
+                              )
+                          ),
                           child: const Text(
                             'Settings',
                             style: TextStyle(fontSize: 18),

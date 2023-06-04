@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         title: 'แอพหมูอ้วง',
         theme: ThemeData(
           useMaterial3: true,
+          colorSchemeSeed: Colors.teal,
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.teal,
             iconTheme: IconThemeData(
