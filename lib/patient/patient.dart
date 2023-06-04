@@ -133,6 +133,7 @@ class PatientDeleteButton extends StatelessWidget {
     return IconButton(
       icon: const Icon(Icons.delete),
       color: Colors.red.shade500,
+      highlightColor: Colors.white,
       iconSize: 30,
       onPressed: () {
         deletePatient(id);

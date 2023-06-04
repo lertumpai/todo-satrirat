@@ -45,6 +45,7 @@ class PatientSearch extends StatefulWidget {
 
 class _PatientSearchState extends State<PatientSearch> {
   Color _textFieldColorTheme = Colors.black26;
+  Color _textFieldDeleteSearch = Colors.black26;
 
   @override
   void initState() {
@@ -56,6 +57,8 @@ class _PatientSearchState extends State<PatientSearch> {
     setState(() {
       _textFieldColorTheme =
           widget.focusSearch.hasFocus ? Colors.teal.shade200 : Colors.black26;
+      _textFieldDeleteSearch =
+          widget.focusSearch.hasFocus ? Colors.red.shade400 : Colors.black26;
     });
   }
 
@@ -83,7 +86,8 @@ class _PatientSearchState extends State<PatientSearch> {
                 },
                 splashColor: Colors.white.withOpacity(0),
                 highlightColor: Colors.white.withOpacity(0),
-                icon: Icon(Icons.cancel_outlined, color: _textFieldColorTheme)),
+                icon:
+                    Icon(Icons.cancel_outlined, color: _textFieldDeleteSearch)),
             labelText: 'Search hn',
             labelStyle: TextStyle(color: _textFieldColorTheme)),
       ),
