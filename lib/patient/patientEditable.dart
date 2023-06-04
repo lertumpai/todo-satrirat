@@ -156,7 +156,38 @@ class PatientToggleList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         IconButton(
-            onPressed: () {},
+            onPressed: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text('Todo list'),
+                    backgroundColor: Colors.white,
+                    content: TodoListPopup(),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.red.shade100),
+                        ),
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(color: Colors.red.shade500),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.teal.shade100),
+                        ),
+                        child: Text(
+                          'OK',
+                          style: TextStyle(color: Colors.teal.shade400),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             highlightColor: Colors.teal.shade100,
             icon: const Icon(Icons.add_circle_outline_sharp,
                 size: 40, color: Colors.black54)),
@@ -227,6 +258,25 @@ class PatientToggle extends StatelessWidget {
           overflow: TextOverflow.clip,
         ))
       ],
+    );
+  }
+}
+
+class TodoListPopup extends StatelessWidget {
+  const TodoListPopup({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      child: Column(
+        children: const [
+          Text('AlertDialog description'),
+          Text('AlertDialog description'),
+          Text('AlertDialog description'),
+          Text('AlertDialog description'),
+        ],
+      ),
     );
   }
 }
