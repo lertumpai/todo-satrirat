@@ -5,6 +5,7 @@ import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 import 'package:todo_satrirat/patient/patientList.dart';
 import 'package:todo_satrirat/patient/patientManage.dart';
 
+import '../transitionBuilder.dart';
 import 'bloc/patientList.state.dart';
 
 class PatientListPage extends StatefulWidget {
@@ -41,10 +42,7 @@ class _PatientListPageState extends State<PatientListPage> {
           IconButton(
               onPressed: () {
                 _focusSearch.unfocus();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const PatientEditablePage()));
+                Navigator.of(context).push(patientEditableRoute());
               },
               icon: const Icon(Icons.add_card)),
           const SizedBox(width: 10),
@@ -77,4 +75,12 @@ class _PatientListPageState extends State<PatientListPage> {
       ),
     );
   }
+}
+
+Route patientEditableRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const PatientEditablePage(),
+    transitionsBuilder: transitionsBuilder,
+  );
 }

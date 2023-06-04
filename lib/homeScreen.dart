@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo_satrirat/patient/patientListScreen.dart';
+import 'package:todo_satrirat/settings/settingsScreen.dart';
+import 'package:todo_satrirat/transitionBuilder.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -7,10 +10,8 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-            'App หมูอ้วงบันทึกงาน',
-            style: TextStyle(color: Colors.white)
-        ),
+        title: const Text('App หมูอ้วงบันทึกงาน',
+            style: TextStyle(color: Colors.white)),
       ),
       body: Center(
         child: Container(
@@ -25,13 +26,11 @@ class MyHomePage extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(vertical: 4),
                       child: FilledButton.tonal(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/patient-list');
-                            },
+                            Navigator.of(context).push(patientListRoute());
+                          },
                           style: const ButtonStyle(
                               padding: MaterialStatePropertyAll(
-                                  EdgeInsets.symmetric(vertical: 18)
-                              )
-                          ),
+                                  EdgeInsets.symmetric(vertical: 18))),
                           child: const Text(
                             'Patient list',
                             style: TextStyle(fontSize: 18),
@@ -47,13 +46,11 @@ class MyHomePage extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(vertical: 4),
                       child: FilledButton.tonal(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/settings');
+                            Navigator.of(context).push(settingsRoute());
                           },
                           style: const ButtonStyle(
                               padding: MaterialStatePropertyAll(
-                                  EdgeInsets.symmetric(vertical: 18)
-                              )
-                          ),
+                                  EdgeInsets.symmetric(vertical: 18))),
                           child: const Text(
                             'Settings',
                             style: TextStyle(fontSize: 18),
@@ -68,4 +65,20 @@ class MyHomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+Route settingsRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const SettingsPage(),
+    transitionsBuilder: transitionsBuilder,
+  );
+}
+
+Route patientListRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const PatientListPage(),
+    transitionsBuilder: transitionsBuilder,
+  );
 }

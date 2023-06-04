@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 
 import '../db/model/patient.dart';
+import '../transitionBuilder.dart';
 
 class Patient extends StatelessWidget {
   final PatientModel patient;
@@ -20,10 +21,7 @@ class Patient extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         focusSearch.unfocus();
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => PatientEditablePage(id: patient.id)));
+        Navigator.of(context).push(patientEditableRoute(patient.id));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -140,4 +138,12 @@ class PatientDeleteButton extends StatelessWidget {
       },
     );
   }
+}
+
+Route patientEditableRoute(int patientId) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        PatientEditablePage(id: patientId),
+    transitionsBuilder: transitionsBuilder,
+  );
 }
