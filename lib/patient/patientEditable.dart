@@ -164,30 +164,30 @@ class PatientToggleList extends StatelessWidget {
                     content: TodoListPopup(
                       todos: todos,
                     ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.red.shade100),
-                        ),
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(color: Colors.red.shade500),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'OK'),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.teal.shade100),
-                        ),
-                        child: Text(
-                          'OK',
-                          style: TextStyle(color: Colors.teal.shade400),
-                        ),
-                      ),
-                    ],
+                    // actions: [
+                    //   TextButton(
+                    //     onPressed: () => Navigator.pop(context, 'Cancel'),
+                    //     style: ButtonStyle(
+                    //       backgroundColor: MaterialStateProperty.all<Color>(
+                    //           Colors.red.shade100),
+                    //     ),
+                    //     child: Text(
+                    //       'Cancel',
+                    //       style: TextStyle(color: Colors.red.shade500),
+                    //     ),
+                    //   ),
+                    //   TextButton(
+                    //     onPressed: () => Navigator.pop(context, 'OK'),
+                    //     style: ButtonStyle(
+                    //       backgroundColor: MaterialStateProperty.all<Color>(
+                    //           Colors.teal.shade100),
+                    //     ),
+                    //     child: Text(
+                    //       'OK',
+                    //       style: TextStyle(color: Colors.teal.shade400),
+                    //     ),
+                    //   ),
+                    // ],
                   ),
                 ),
             highlightColor: Colors.teal.shade100,
@@ -280,7 +280,7 @@ class TodoListPopup extends StatelessWidget {
         color: Colors.white70,
       ),
       padding: const EdgeInsets.all(10),
-      height: 300,
+      height: 400,
       width: 300,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -297,6 +297,34 @@ class TodoListPopup extends StatelessWidget {
               separatorBuilder: (context, i) => const Divider(height: 1),
               itemCount: todos.length,
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'Cancel'),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.red.shade100),
+                ),
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.red.shade500),
+                ),
+              ),
+              const SizedBox(width: 5),
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.teal.shade100),
+                ),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.teal.shade400),
+                ),
+              )
+            ],
           )
         ],
       ),
@@ -304,7 +332,7 @@ class TodoListPopup extends StatelessWidget {
   }
 }
 
-class TodoListCheckbox extends StatelessWidget {
+class TodoListCheckbox extends StatefulWidget {
   final TodoModel todo;
 
   const TodoListCheckbox({
@@ -313,26 +341,44 @@ class TodoListCheckbox extends StatelessWidget {
   });
 
   @override
+  State<TodoListCheckbox> createState() => _TodoListCheckboxState();
+}
+
+class _TodoListCheckboxState extends State<TodoListCheckbox> {
+  bool isCheck = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Checkbox(
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          checkColor: Colors.white,
-          fillColor: MaterialStateProperty.all<Color>(Colors.teal.shade300),
-          value: true,
-          onChanged: (bool? value) {},
-        ),
-        Flexible(
-          child: Text(
-            todo.name!,
-            style: const TextStyle(fontSize: 18),
-            overflow: TextOverflow.clip,
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isCheck = isCheck == true ? false : true;
+        });
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Checkbox(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            checkColor: Colors.white,
+            fillColor: MaterialStateProperty.all<Color>(Colors.teal.shade300),
+            value: isCheck,
+            onChanged: (bool? value) {
+              setState(() {
+                isCheck = isCheck == true ? false : true;
+              });
+            },
           ),
-        )
-      ],
+          Expanded(
+            child: Text(
+              widget.todo.name!,
+              style: const TextStyle(fontSize: 18),
+              overflow: TextOverflow.clip,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
