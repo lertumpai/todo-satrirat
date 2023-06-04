@@ -84,8 +84,15 @@ class _PatientNoteState extends State<PatientNote> {
                   controller: _hnController,
                   onChanged: widget.onHnChange,
                   style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.teal.shade200,
+                            width: 1.5
+                        ),
+                        borderRadius: const BorderRadius.all(Radius.circular(20))
+                    ),
+                    border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))
                     ),
                   ),
@@ -109,8 +116,15 @@ class _PatientNoteState extends State<PatientNote> {
                   style: const TextStyle(fontSize: 20),
                   controller: _noteController,
                   onChanged: widget.onNoteChange,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.teal.shade200,
+                            width: 1.5
+                        ),
+                        borderRadius: const BorderRadius.all(Radius.circular(20))
+                    ),
+                    border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))
                     ),
                   ),

@@ -87,8 +87,15 @@ class _SettingsTodoState extends State<SettingsTodo> {
           controller: _textEditingController,
           onChanged: onChange,
           style: const TextStyle(fontSize: 20),
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
+          decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: Colors.teal.shade200,
+                    width: 1.5
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(20))
+            ),
+            border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20))
             ),
           ),
