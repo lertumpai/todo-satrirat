@@ -41,6 +41,17 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.teal,
+            iconTheme: IconThemeData(
+              color: Colors.white,
+            ),
+            actionsIconTheme: IconThemeData(
+              color: Colors.white,
+              size: 30,
+            ),
+            titleTextStyle: TextStyle(
+              fontSize: 24,
+              color: Colors.white,
+            )
           ),
         ),
         initialRoute: '/',
