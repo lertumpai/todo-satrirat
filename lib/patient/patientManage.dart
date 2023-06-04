@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
 class PatientManage extends StatelessWidget {
-  final Function(String) onSearch;
+  final Function onSearch;
   final FocusNode focusSearch;
+  final TextEditingController searchController;
 
   const PatientManage(
-      {super.key, required this.onSearch, required this.focusSearch});
+      {super.key,
+      required this.onSearch,
+      required this.focusSearch,
+      required this.searchController});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +20,7 @@ class PatientManage extends StatelessWidget {
           PatientSearch(
             onSearch: onSearch,
             focusSearch: focusSearch,
+            searchController: searchController,
           ),
         ],
       ),
@@ -24,24 +29,26 @@ class PatientManage extends StatelessWidget {
 }
 
 class PatientSearch extends StatefulWidget {
-  final Function(String) onSearch;
+  final Function onSearch;
+  final TextEditingController searchController;
   final FocusNode focusSearch;
 
   const PatientSearch(
-      {super.key, required this.onSearch, required this.focusSearch});
+      {super.key,
+      required this.onSearch,
+      required this.focusSearch,
+      required this.searchController});
 
   @override
   State<PatientSearch> createState() => _PatientSearchState();
 }
 
 class _PatientSearchState extends State<PatientSearch> {
-  final TextEditingController searchController = TextEditingController();
   Color _textFieldColorTheme = Colors.black26;
 
   @override
   void initState() {
     super.initState();
-    searchController.text = "";
     widget.focusSearch.addListener(_onFocusChange);
   }
 
@@ -57,9 +64,9 @@ class _PatientSearchState extends State<PatientSearch> {
     return Expanded(
       child: TextField(
         onChanged: (String v) {
-          widget.onSearch(searchController.text);
+          widget.onSearch();
         },
-        controller: searchController,
+        controller: widget.searchController,
         focusNode: widget.focusSearch,
         decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
@@ -71,8 +78,8 @@ class _PatientSearchState extends State<PatientSearch> {
             prefixIcon: Icon(Icons.search, color: _textFieldColorTheme),
             suffixIcon: IconButton(
                 onPressed: () {
-                  searchController.text = "";
-                  widget.onSearch(searchController.text);
+                  widget.searchController.text = "";
+                  widget.onSearch();
                 },
                 splashColor: Colors.white.withOpacity(0),
                 highlightColor: Colors.white.withOpacity(0),

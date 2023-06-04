@@ -14,19 +14,18 @@ class PatientListCubit extends Cubit<PatientListState> {
   PatientListCubit() : super(const PatientListState(patients: []));
 
   void loading() {
-    final newState = state
-        .updateStatus(PatientListStatusEnum.loading);
+    final newState = state.updateStatus(PatientListStatusEnum.loading);
     emit(newState);
   }
 
-  void getAll() async {
-    loading();
-    final patients = await patientRepo?.where().findAll();
-    final newState = state
-        .updatePatients(patients!)
-        .updateStatus(PatientListStatusEnum.ready);
-    emit(newState);
-  }
+  // void getAll() async {
+  //   loading();
+  //   final patients = await patientRepo?.where().findAll();
+  //   final newState = state
+  //       .updatePatients(patients!)
+  //       .updateStatus(PatientListStatusEnum.ready);
+  //   emit(newState);
+  // }
 
   void delete(int id) async {
     await db?.writeTxn(() async {
@@ -39,8 +38,7 @@ class PatientListCubit extends Cubit<PatientListState> {
   }
 
   void search(String hn) async {
-    final searching = state
-        .updateStatus(PatientListStatusEnum.searching);
+    final searching = state.updateStatus(PatientListStatusEnum.searching);
     emit(searching);
 
     final patients = await patientRepo?.filter().hnContains(hn).findAll();

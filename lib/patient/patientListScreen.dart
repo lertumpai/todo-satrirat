@@ -16,11 +16,12 @@ class PatientListPage extends StatefulWidget {
 
 class _PatientListPageState extends State<PatientListPage> {
   final FocusNode _focusSearch = FocusNode();
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
-    context.read<PatientListCubit>().getAll();
     super.initState();
+    context.read<PatientListCubit>().search("");
   }
 
   @override
@@ -29,8 +30,8 @@ class _PatientListPageState extends State<PatientListPage> {
       context.read<PatientListCubit>().delete(id);
     }
 
-    void onSearch(String hn) {
-      context.read<PatientListCubit>().search(hn);
+    void onSearch() {
+      context.read<PatientListCubit>().search(searchController.text);
     }
 
     return Scaffold(
@@ -53,12 +54,16 @@ class _PatientListPageState extends State<PatientListPage> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            PatientManage(onSearch: onSearch, focusSearch: _focusSearch),
+            PatientManage(
+                onSearch: onSearch,
+                focusSearch: _focusSearch,
+                searchController: searchController),
             const SizedBox(height: 10),
             BlocConsumer<PatientListCubit, PatientListState>(
                 listener: (context, state) {
-              if (state.status == PatientListStatusEnum.loading) {
-                context.read<PatientListCubit>().getAll();
+              if (state.status == PatientListStatusEnum.searching ||
+                  state.status == PatientListStatusEnum.loading) {
+                onSearch();
               }
             }, builder: (context, state) {
               return PatientList(
