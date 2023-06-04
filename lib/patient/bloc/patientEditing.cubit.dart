@@ -37,15 +37,6 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     List<PatientTodoModel> patientTodos =
         (await patientTodoRepo?.filter().patientIdEqualTo(id).findAll())!;
 
-    // if (patientTodos.isEmpty) {
-    //   patientTodos = todos!.map((TodoModel todo) {
-    //     final patientTodo = PatientTodoModel();
-    //     patientTodo.done = false;
-    //     patientTodo.todoId = todo.id;
-    //     return patientTodo;
-    //   }).toList();
-    // }
-
     final updatedState = state
         .initPatient(
           patient: patient!,
@@ -92,6 +83,9 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
   }
 
   addTodoList(List<int> todoIds) {
+    final updatingPatientTodo =
+        state.updateStatus(PatientEditingStatusEnum.updatingPatientTodo);
+    emit(updatingPatientTodo);
     final updatedPatientTodo = state.addTodoList(todoIds);
     emit(updatedPatientTodo);
   }

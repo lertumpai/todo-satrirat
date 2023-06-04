@@ -147,29 +147,45 @@ class PatientToggleList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.separated(
-        shrinkWrap: true,
-        physics: const AlwaysScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          if (index == patientTodos.length) {
-            return const SizedBox(height: 1);
-          }
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        IconButton(
+            onPressed: () {},
+            highlightColor: Colors.teal.shade100,
+            icon: const Icon(Icons.add_circle_outline_sharp,
+                size: 40, color: Colors.black54)),
+        const SizedBox(width: 5),
+        Expanded(
+          child: Column(
+            children: [
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == patientTodos.length) {
+                    return const SizedBox(height: 1);
+                  }
 
-          return PatientToggle(
-            name: todos
-                .firstWhere((todo) => todo.id == patientTodos[index].todoId)
-                .name!,
-            patientTodo: patientTodos[index],
-            onTogglePatientTodo: onTogglePatientTodo,
-          );
-        },
-        separatorBuilder: (context, i) => const Divider(
-          color: Colors.black12,
-          thickness: 1,
+                  return PatientToggle(
+                    name: todos
+                        .firstWhere(
+                            (todo) => todo.id == patientTodos[index].todoId)
+                        .name!,
+                    patientTodo: patientTodos[index],
+                    onTogglePatientTodo: onTogglePatientTodo,
+                  );
+                },
+                separatorBuilder: (context, i) => const Divider(
+                  color: Colors.black12,
+                  thickness: 1,
+                ),
+                itemCount: patientTodos.length + 1,
+              ),
+            ],
+          ),
         ),
-        itemCount: patientTodos.length + 1,
-      ),
+      ],
     );
   }
 }
