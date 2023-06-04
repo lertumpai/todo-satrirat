@@ -26,19 +26,7 @@ class SettingsCubit extends Cubit<TodoListType> {
     todo.name = name;
     todo.sequence = 0;
     await db?.writeTxn(() async {
-      final id = await todoRepo?.put(todo);
-      final patients = await patientRepo?.where().findAll();
-      await Future.wait(
-          patients!.map(
-                  (patient) async {
-                final patientTodo = PatientTodoModel();
-                patientTodo.done = false;
-                patientTodo.patientId = patient.id;
-                patientTodo.todoId = id;
-                return patientTodoRepo?.put(patientTodo);
-              }
-          )
-      );
+      await todoRepo?.put(todo);
     });
     getAll();
   }
