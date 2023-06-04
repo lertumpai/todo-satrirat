@@ -69,9 +69,9 @@ class PatientEditingState extends Equatable {
     return patientTodos.firstWhere((patientTodo) => patientTodo.todoId == todoId);
   }
 
-  PatientEditingState toggleDoneByPatientTodoId(int patientTodoId) {
+  PatientEditingState toggleDoneByTodoId(int todoId) {
     final updatedToggle = patientTodos.map((patientTodo) {
-      if (patientTodo.id == patientTodoId ) {
+      if (patientTodo.todoId == todoId ) {
         patientTodo.done = patientTodo.done == true ? false : true;
         return patientTodo;
       }

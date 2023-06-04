@@ -184,7 +184,7 @@ class PatientToggle extends StatelessWidget {
           activeColor: Colors.teal.shade200,
           value: patientTodo.done!,
           onChanged: (bool value) {
-            onTogglePatientTodo(patientTodo.id);
+            onTogglePatientTodo(patientTodo.todoId!);
           },
         ),
         const SizedBox(width: 5),

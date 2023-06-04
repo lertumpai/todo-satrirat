@@ -37,8 +37,8 @@ class _PatientEditablePageState extends State<PatientEditablePage> {
     void onNoteChange(String note) {
       context.read<PatientEditingCubit>().updatePatientNote(note);
     }
-    void onTogglePatientTodo(int patientTodoId) {
-      context.read<PatientEditingCubit>().toggleDoneByPatientIdAndPatientTodoId(patientTodoId);
+    void onTogglePatientTodo(int todoId) {
+      context.read<PatientEditingCubit>().toggleDoneByTodoId(todoId);
     }
 
     return Scaffold(

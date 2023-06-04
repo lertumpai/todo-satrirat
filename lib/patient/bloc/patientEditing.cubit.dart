@@ -85,11 +85,11 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     emit(updatedStatusSaved);
   }
 
-  toggleDoneByPatientIdAndPatientTodoId(int patientTodoId) {
+  toggleDoneByTodoId(int todoId) {
     final updatedStatus = state.updateStatus(PatientEditingStatusEnum.toggle);
     emit(updatedStatus);
     final updatedToggle = state
-        .toggleDoneByPatientTodoId(patientTodoId)
+        .toggleDoneByTodoId(todoId)
         .updateStatus(PatientEditingStatusEnum.ready);
     emit(updatedToggle);
   }
