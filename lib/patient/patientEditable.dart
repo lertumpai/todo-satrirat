@@ -161,7 +161,9 @@ class PatientToggleList extends StatelessWidget {
                   builder: (BuildContext context) => AlertDialog(
                     title: const Text('Todo list'),
                     backgroundColor: Colors.white,
-                    content: TodoListPopup(),
+                    content: TodoListPopup(
+                      todos: todos,
+                    ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -263,20 +265,59 @@ class PatientToggle extends StatelessWidget {
 }
 
 class TodoListPopup extends StatelessWidget {
-  const TodoListPopup({super.key});
+  final List<TodoModel> todos;
+
+  const TodoListPopup({
+    super.key,
+    required this.todos,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
+      width: 200,
       child: Column(
-        children: const [
-          Text('AlertDialog description'),
-          Text('AlertDialog description'),
-          Text('AlertDialog description'),
-          Text('AlertDialog description'),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TodoListCheckbox(
+            todo: todos[0],
+          )
         ],
       ),
+    );
+  }
+}
+
+class TodoListCheckbox extends StatelessWidget {
+  final TodoModel todo;
+
+  const TodoListCheckbox({
+    super.key,
+    required this.todo,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          color: Colors.red.shade50,
+          child: Checkbox(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            checkColor: Colors.white,
+            fillColor: MaterialStateProperty.all<Color>(Colors.teal.shade300),
+            value: true,
+            onChanged: (bool? value) {},
+          ),
+        ),
+        Text(
+          todo.name!,
+          style: const TextStyle(fontSize: 18),
+        )
+      ],
     );
   }
 }
