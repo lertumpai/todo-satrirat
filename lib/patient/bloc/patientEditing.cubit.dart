@@ -24,8 +24,7 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
 
     if (id != null) {
       patient = await patientRepo?.get(id);
-    }
-    else {
+    } else {
       patient = PatientModel();
       final now = DateTime.now();
       patient.hn = "";
@@ -35,24 +34,25 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     }
 
     final todos = await todoRepo?.where().findAll();
-    List<PatientTodoModel> patientTodos = (await patientTodoRepo?.filter().patientIdEqualTo(id).findAll())!;
+    List<PatientTodoModel> patientTodos =
+        (await patientTodoRepo?.filter().patientIdEqualTo(id).findAll())!;
 
-    if (patientTodos.isEmpty) {
-      patientTodos = todos!.map((TodoModel todo) {
-        final patientTodo = PatientTodoModel();
-        patientTodo.done = false;
-        patientTodo.todoId = todo.id;
-        return patientTodo;
-      }).toList();
-    }
+    // if (patientTodos.isEmpty) {
+    //   patientTodos = todos!.map((TodoModel todo) {
+    //     final patientTodo = PatientTodoModel();
+    //     patientTodo.done = false;
+    //     patientTodo.todoId = todo.id;
+    //     return patientTodo;
+    //   }).toList();
+    // }
 
-    final updatedState = state.initPatient(
-      patient: patient!,
-      patientTodos: patientTodos,
-      todos: todos!,
-    ).updateStatus(
-        PatientEditingStatusEnum.ready
-    );
+    final updatedState = state
+        .initPatient(
+          patient: patient!,
+          patientTodos: patientTodos,
+          todos: todos!,
+        )
+        .updateStatus(PatientEditingStatusEnum.ready);
     emit(updatedState);
   }
 
@@ -67,21 +67,18 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
   }
 
   save() async {
-    final updatedStatusSaving = state.updateStatus(PatientEditingStatusEnum.saving);
+    final updatedStatusSaving =
+        state.updateStatus(PatientEditingStatusEnum.saving);
     emit(updatedStatusSaving);
     await db?.writeTxn(() async {
       final patientId = await patientRepo?.put(state.patient!);
-      await Future.wait(
-        state.todos.map(
-          (todo) async {
-            final patientTodo = state.getPatientTodoByTodoId(todo.id);
-            patientTodo.patientId = patientId;
-            return patientTodoRepo?.put(patientTodo);
-          }
-        )
-      );
+      await Future.wait(state.patientTodos.map((patientTodo) async {
+        patientTodo.patientId = patientId;
+        return patientTodoRepo?.put(patientTodo);
+      }));
     });
-    final updatedStatusSaved = state.updateStatus(PatientEditingStatusEnum.saved);
+    final updatedStatusSaved =
+        state.updateStatus(PatientEditingStatusEnum.saved);
     emit(updatedStatusSaved);
   }
 
@@ -92,5 +89,10 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
         .toggleDoneByTodoId(todoId)
         .updateStatus(PatientEditingStatusEnum.ready);
     emit(updatedToggle);
+  }
+
+  addTodoList(List<int> todoIds) {
+    final updatedPatientTodo = state.addTodoList(todoIds);
+    emit(updatedPatientTodo);
   }
 }

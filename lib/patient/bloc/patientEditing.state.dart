@@ -19,12 +19,11 @@ class PatientEditingState extends Equatable {
     this.todos = const [],
   });
 
-  PatientEditingState copyWith({
-    PatientModel? patient,
-    List<PatientTodoModel>? patientTodos,
-    List<TodoModel>? todos,
-    PatientEditingStatusEnum? status
-  }) {
+  PatientEditingState copyWith(
+      {PatientModel? patient,
+      List<PatientTodoModel>? patientTodos,
+      List<TodoModel>? todos,
+      PatientEditingStatusEnum? status}) {
     return PatientEditingState(
       patient: patient ?? this.patient,
       patientTodos: patientTodos ?? this.patientTodos,
@@ -33,11 +32,10 @@ class PatientEditingState extends Equatable {
     );
   }
 
-  PatientEditingState initPatient({
-    required PatientModel patient,
-    required List<PatientTodoModel> patientTodos,
-    required List<TodoModel> todos
-  }) {
+  PatientEditingState initPatient(
+      {required PatientModel patient,
+      required List<PatientTodoModel> patientTodos,
+      required List<TodoModel> todos}) {
     return copyWith(
       patient: patient,
       patientTodos: patientTodos,
@@ -66,12 +64,13 @@ class PatientEditingState extends Equatable {
   }
 
   PatientTodoModel getPatientTodoByTodoId(int todoId) {
-    return patientTodos.firstWhere((patientTodo) => patientTodo.todoId == todoId);
+    return patientTodos
+        .firstWhere((patientTodo) => patientTodo.todoId == todoId);
   }
 
   PatientEditingState toggleDoneByTodoId(int todoId) {
     final updatedToggle = patientTodos.map((patientTodo) {
-      if (patientTodo.todoId == todoId ) {
+      if (patientTodo.todoId == todoId) {
         patientTodo.done = patientTodo.done == true ? false : true;
         return patientTodo;
       }
@@ -82,9 +81,28 @@ class PatientEditingState extends Equatable {
     );
   }
 
+  PatientEditingState addTodoList(List<int> todoIds) {
+    final newPatientTodos = todoIds
+        .where((todoId) =>
+            patientTodos
+                .firstWhere((patientTodo) => patientTodo.todoId == todoId) ==
+            null)
+        .map((todoId) {
+      final patientTodo = PatientTodoModel();
+      patientTodo.todoId = todoId;
+      patientTodo.patientId = patient!.id;
+      patientTodo.done = false;
+      return patientTodo;
+    }).toList();
+    final updatedPatientTodos = [...patientTodos, ...newPatientTodos];
+    return copyWith(
+      patientTodos: updatedPatientTodos,
+    );
+  }
+
   @override
   List<Object?> get props => [
-    patient,
-    status,
-  ];
+        patient,
+        status,
+      ];
 }
