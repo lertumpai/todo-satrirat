@@ -274,14 +274,29 @@ class TodoListPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      width: 200,
+    return Container(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        color: Colors.white70,
+      ),
+      padding: const EdgeInsets.all(10),
+      height: 300,
+      width: 300,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TodoListCheckbox(
-            todo: todos[0],
+          Expanded(
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return TodoListCheckbox(
+                  todo: todos[index],
+                );
+              },
+              separatorBuilder: (context, i) => const Divider(height: 1),
+              itemCount: todos.length,
+            ),
           )
         ],
       ),
@@ -302,20 +317,20 @@ class TodoListCheckbox extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          color: Colors.red.shade50,
-          child: Checkbox(
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            checkColor: Colors.white,
-            fillColor: MaterialStateProperty.all<Color>(Colors.teal.shade300),
-            value: true,
-            onChanged: (bool? value) {},
-          ),
+        Checkbox(
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          checkColor: Colors.white,
+          fillColor: MaterialStateProperty.all<Color>(Colors.teal.shade300),
+          value: true,
+          onChanged: (bool? value) {},
         ),
-        Text(
-          todo.name!,
-          style: const TextStyle(fontSize: 18),
+        Flexible(
+          child: Text(
+            todo.name!,
+            style: const TextStyle(fontSize: 18),
+            overflow: TextOverflow.clip,
+          ),
         )
       ],
     );
