@@ -47,12 +47,19 @@ class _PatientEditablePageState extends State<PatientEditablePage> {
             'App หมูอ้วงบันทึกงาน',
             style: TextStyle(color: Colors.white)
         ),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+        actionsIconTheme: const IconThemeData(
+          color: Colors.white,
+          size: 30,
+        ),
         actions: [
           IconButton(
               onPressed: () {
                 onSave();
               },
-              icon: const Icon(Icons.save, size: 30)
+              icon: const Icon(Icons.save)
           ),
           const SizedBox(width: 10),
         ],

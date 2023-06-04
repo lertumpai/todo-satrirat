@@ -36,6 +36,13 @@ class _PatientListPageState extends State<PatientListPage> {
             'App หมูอ้วงบันทึกงาน',
             style: TextStyle(color: Colors.white)
         ),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+        actionsIconTheme: const IconThemeData(
+          color: Colors.white,
+          size: 30,
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -43,8 +50,7 @@ class _PatientListPageState extends State<PatientListPage> {
                     context,
                     MaterialPageRoute(builder: (context) => const PatientEditablePage()));
               },
-              icon: const Icon(Icons.add_card, size: 30
-              )
+              icon: const Icon(Icons.add_card)
           ),
           const SizedBox(width: 10),
         ],
