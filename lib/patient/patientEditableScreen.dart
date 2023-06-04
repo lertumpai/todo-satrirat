@@ -43,7 +43,10 @@ class _PatientEditablePageState extends State<PatientEditablePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('App หมูอ้วงบันทึกงาน'),
+        title: const Text(
+            'App หมูอ้วงบันทึกงาน',
+            style: TextStyle(color: Colors.white)
+        ),
         actions: [
           IconButton(
               onPressed: () {

@@ -32,7 +32,10 @@ class _PatientListPageState extends State<PatientListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('App หมูอ้วงบันทึกงาน'),
+        title: const Text(
+            'App หมูอ้วงบันทึกงาน',
+            style: TextStyle(color: Colors.white)
+        ),
         actions: [
           IconButton(
               onPressed: () {

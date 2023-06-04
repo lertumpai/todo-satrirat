@@ -7,7 +7,10 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('App หมูอ้วงบันทึกงาน'),
+        title: const Text(
+            'App หมูอ้วงบันทึกงาน',
+            style: TextStyle(color: Colors.white)
+        ),
       ),
       body: Center(
         child: Container(

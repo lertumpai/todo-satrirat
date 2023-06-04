@@ -38,7 +38,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'แอพหมูอ้วง',
         theme: ThemeData(
-          primarySwatch: Colors.teal,
+          useMaterial3: true,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.teal,
+          ),
         ),
         initialRoute: '/',
         routes: {
