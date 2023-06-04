@@ -26,7 +26,7 @@ class SettingsListPage extends StatelessWidget {
     return Expanded(
       child: ListView.separated(
         shrinkWrap: true,
-        physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
+        physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           if (index == todos.length) {
             return const SizedBox(height: 1);

@@ -7,51 +7,45 @@ import '../db/model/patient.dart';
 class Patient extends StatelessWidget {
   final PatientModel patient;
   final Function(int) deletePatient;
+  final FocusNode focusSearch;
 
-  const Patient({
-    super.key,
-    required this.patient,
-    required this.deletePatient
-  });
+  const Patient(
+      {super.key,
+      required this.patient,
+      required this.deletePatient,
+      required this.focusSearch});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        focusSearch.unfocus();
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PatientEditablePage(id: patient.id))
-        );
+            MaterialPageRoute(
+                builder: (context) => PatientEditablePage(id: patient.id)));
       },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-              width: 2,
-              color: Colors.teal.shade200
-          )
-        ),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(width: 2, color: Colors.teal.shade200)),
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Row(
           children: [
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  PatientHn(
-                      patient: patient,
-                      deletePatient: deletePatient
-                  ),
-                  Divider(
-                    color: Colors.teal.shade200,
-                    thickness: 2.0,
-                  ),
-                  PatientNote(
-                    note: patient.note!,
-                  )
-                ],
-              )
-            ),
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PatientHn(patient: patient, deletePatient: deletePatient),
+                Divider(
+                  color: Colors.teal.shade200,
+                  thickness: 2.0,
+                ),
+                PatientNote(
+                  note: patient.note!,
+                )
+              ],
+            )),
           ],
         ),
       ),
@@ -63,11 +57,8 @@ class PatientHn extends StatelessWidget {
   final Function(int) deletePatient;
   final PatientModel patient;
 
-  const PatientHn({
-    super.key,
-    required this.deletePatient,
-    required this.patient
-  });
+  const PatientHn(
+      {super.key, required this.deletePatient, required this.patient});
 
   @override
   Widget build(BuildContext context) {
@@ -84,19 +75,20 @@ class PatientHn extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                          patient.hn!,
-                          style: const TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.w600),
-                          overflow: TextOverflow.clip
-                      ),
+                      Text(patient.hn!,
+                          style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w600),
+                          overflow: TextOverflow.clip),
                       Text(
                           "สร้างเมื่อ: ${Day.fromDateTime(patient.createdAt!).format("DD/MM/YYYY HH:mm")} [${patient.id}]",
-                          style: const TextStyle(fontSize: 12, color: Colors.black26)
-                      ),
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.black26)),
                       Text(
                           "อัพเดตเมื่อ: ${Day.fromDateTime(patient.updatedAt!).format("DD/MM/YYYY HH:mm")}",
-                          style: const TextStyle(fontSize: 12, color: Colors.black26)
-                      ),
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.black26)),
                     ],
                   )
                 ],
@@ -104,8 +96,7 @@ class PatientHn extends StatelessWidget {
             ],
           ),
           PatientDeleteButton(id: patient.id, deletePatient: deletePatient),
-        ]
-    );
+        ]);
   }
 }
 
@@ -116,20 +107,14 @@ class PatientNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(Icons.sticky_note_2_outlined, size: 40, color: Colors.black54),
-          const SizedBox(width: 5),
-          Flexible(
-              child: Text(
-                  note != "" ? note : "ไม่มีการบันทึก",
-                  style: const TextStyle(fontSize: 20, color: Colors.black87),
-                  overflow: TextOverflow.clip
-              )
-          )
-        ]
-    );
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Icon(Icons.sticky_note_2_outlined, size: 40, color: Colors.black54),
+      const SizedBox(width: 5),
+      Flexible(
+          child: Text(note != "" ? note : "ไม่มีการบันทึก",
+              style: const TextStyle(fontSize: 20, color: Colors.black87),
+              overflow: TextOverflow.clip))
+    ]);
   }
 }
 
@@ -155,4 +140,3 @@ class PatientDeleteButton extends StatelessWidget {
     );
   }
 }
-

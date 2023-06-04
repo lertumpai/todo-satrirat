@@ -155,7 +155,7 @@ class PatientToggleList extends StatelessWidget {
     return Expanded(
       child: ListView.separated(
         shrinkWrap: true,
-        physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
+        physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           if (index == patientTodos.length) {
             return const SizedBox(height: 1);

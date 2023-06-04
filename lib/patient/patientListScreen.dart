@@ -15,6 +15,8 @@ class PatientListPage extends StatefulWidget {
 }
 
 class _PatientListPageState extends State<PatientListPage> {
+  final FocusNode _focusSearch = FocusNode();
+
   @override
   void initState() {
     context.read<PatientListCubit>().getAll();
@@ -26,6 +28,7 @@ class _PatientListPageState extends State<PatientListPage> {
     void onDeletePatient(int id) {
       context.read<PatientListCubit>().delete(id);
     }
+
     void onSearch(String hn) {
       context.read<PatientListCubit>().search(hn);
     }
@@ -36,12 +39,13 @@ class _PatientListPageState extends State<PatientListPage> {
         actions: [
           IconButton(
               onPressed: () {
+                _focusSearch.unfocus();
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const PatientEditablePage()));
+                    MaterialPageRoute(
+                        builder: (context) => const PatientEditablePage()));
               },
-              icon: const Icon(Icons.add_card)
-          ),
+              icon: const Icon(Icons.add_card)),
           const SizedBox(width: 10),
         ],
       ),
@@ -49,23 +53,20 @@ class _PatientListPageState extends State<PatientListPage> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            PatientManage(
-              onSearch: onSearch,
-            ),
+            PatientManage(onSearch: onSearch, focusSearch: _focusSearch),
             const SizedBox(height: 10),
             BlocConsumer<PatientListCubit, PatientListState>(
                 listener: (context, state) {
-                  if (state.status == PatientListStatusEnum.loading) {
-                    context.read<PatientListCubit>().getAll();
-                  }
-                },
-                builder: (context, state) {
-                  return PatientList(
-                    patients: state.patients,
-                    onDeletePatient: onDeletePatient,
-                  );
-                }
-            )
+              if (state.status == PatientListStatusEnum.loading) {
+                context.read<PatientListCubit>().getAll();
+              }
+            }, builder: (context, state) {
+              return PatientList(
+                patients: state.patients,
+                onDeletePatient: onDeletePatient,
+                focusSearch: _focusSearch,
+              );
+            })
           ],
         ),
       ),

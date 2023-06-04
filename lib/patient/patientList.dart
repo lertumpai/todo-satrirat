@@ -6,11 +6,13 @@ import '../db/model/patient.dart';
 class PatientList extends StatelessWidget {
   final List<PatientModel> patients;
   final Function(int) onDeletePatient;
+  final FocusNode focusSearch;
 
   const PatientList({
     super.key,
     required this.patients,
     required this.onDeletePatient,
+    required this.focusSearch,
   });
 
   @override
@@ -20,16 +22,13 @@ class PatientList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Text(
-                " ${patients.length} results",
-                style: const TextStyle(fontSize: 20, color: Colors.black26)
-            )
-          ),
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(" ${patients.length} results",
+                  style: const TextStyle(fontSize: 20, color: Colors.black26))),
           Expanded(
             child: ListView.separated(
               shrinkWrap: true,
-              physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
+              physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 if (index == patients.length) {
                   return const SizedBox(height: 1);
@@ -38,6 +37,7 @@ class PatientList extends StatelessWidget {
                 return Patient(
                   patient: patients[index],
                   deletePatient: onDeletePatient,
+                  focusSearch: focusSearch,
                 );
               },
               separatorBuilder: (context, i) => const SizedBox(height: 10),
