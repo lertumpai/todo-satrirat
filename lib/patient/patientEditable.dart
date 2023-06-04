@@ -152,78 +152,53 @@ class PatientToggleList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        IconButton(
-            onPressed: () => showDialog(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text('Todo list'),
-                    backgroundColor: Colors.white,
-                    content: TodoListPopup(
-                      todos: todos,
+    return Expanded(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          IconButton(
+              onPressed: () => showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Todo list'),
+                      backgroundColor: Colors.white,
+                      content: TodoListPopup(
+                        todos: todos,
+                        onAddTodoList: onAddTodoList,
+                      ),
                     ),
-                    // actions: [
-                    //   TextButton(
-                    //     onPressed: () => Navigator.pop(context, 'Cancel'),
-                    //     style: ButtonStyle(
-                    //       backgroundColor: MaterialStateProperty.all<Color>(
-                    //           Colors.red.shade100),
-                    //     ),
-                    //     child: Text(
-                    //       'Cancel',
-                    //       style: TextStyle(color: Colors.red.shade500),
-                    //     ),
-                    //   ),
-                    //   TextButton(
-                    //     onPressed: () => Navigator.pop(context, 'OK'),
-                    //     style: ButtonStyle(
-                    //       backgroundColor: MaterialStateProperty.all<Color>(
-                    //           Colors.teal.shade100),
-                    //     ),
-                    //     child: Text(
-                    //       'OK',
-                    //       style: TextStyle(color: Colors.teal.shade400),
-                    //     ),
-                    //   ),
-                    // ],
                   ),
-                ),
-            highlightColor: Colors.teal.shade100,
-            icon: const Icon(Icons.add_circle_outline_sharp,
-                size: 40, color: Colors.black54)),
-        const SizedBox(width: 5),
-        Expanded(
-          child: Column(
-            children: [
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == patientTodos.length) {
-                    return const SizedBox(height: 1);
-                  }
+              highlightColor: Colors.teal.shade100,
+              icon: const Icon(Icons.add_circle_outline_sharp,
+                  size: 40, color: Colors.black54)),
+          const SizedBox(width: 5),
+          Expanded(
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                if (index == patientTodos.length) {
+                  return const SizedBox(height: 1);
+                }
 
-                  return PatientToggle(
-                    name: todos
-                        .firstWhere(
-                            (todo) => todo.id == patientTodos[index].todoId)
-                        .name!,
-                    patientTodo: patientTodos[index],
-                    onTogglePatientTodo: onTogglePatientTodo,
-                  );
-                },
-                separatorBuilder: (context, i) => const Divider(
-                  color: Colors.black12,
-                  thickness: 1,
-                ),
-                itemCount: patientTodos.length + 1,
+                return PatientToggle(
+                  name: todos
+                      .firstWhere(
+                          (todo) => todo.id == patientTodos[index].todoId)
+                      .name!,
+                  patientTodo: patientTodos[index],
+                  onTogglePatientTodo: onTogglePatientTodo,
+                );
+              },
+              separatorBuilder: (context, i) => const Divider(
+                color: Colors.black12,
+                thickness: 1,
               ),
-            ],
+              itemCount: patientTodos.length + 1,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -264,16 +239,37 @@ class PatientToggle extends StatelessWidget {
   }
 }
 
-class TodoListPopup extends StatelessWidget {
+class TodoListPopup extends StatefulWidget {
   final List<TodoModel> todos;
+  final Function(List<int> todoIds) onAddTodoList;
 
   const TodoListPopup({
     super.key,
     required this.todos,
+    required this.onAddTodoList,
   });
 
   @override
+  State<TodoListPopup> createState() => _TodoListPopupState();
+}
+
+class _TodoListPopupState extends State<TodoListPopup> {
+  List<int> addingTodoList = [];
+
+  @override
   Widget build(BuildContext context) {
+    onAddTodo(int todoId) {
+      setState(() {
+        addingTodoList.add(todoId);
+      });
+    }
+
+    onRemoveTodo(int todoId) {
+      setState(() {
+        addingTodoList.remove(todoId);
+      });
+    }
+
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -291,11 +287,12 @@ class TodoListPopup extends StatelessWidget {
               physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return TodoListCheckbox(
-                  todo: todos[index],
-                );
+                    todo: widget.todos[index],
+                    onAddTodo: onAddTodo,
+                    onRemoveTodo: onRemoveTodo);
               },
               separatorBuilder: (context, i) => const Divider(height: 1),
-              itemCount: todos.length,
+              itemCount: widget.todos.length,
             ),
           ),
           Row(
@@ -314,13 +311,16 @@ class TodoListPopup extends StatelessWidget {
               ),
               const SizedBox(width: 5),
               TextButton(
-                onPressed: () => Navigator.pop(context, 'OK'),
+                onPressed: () {
+                  widget.onAddTodoList(addingTodoList);
+                  Navigator.pop(context, 'Add');
+                },
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.teal.shade100),
                 ),
                 child: Text(
-                  'OK',
+                  'Add',
                   style: TextStyle(color: Colors.teal.shade400),
                 ),
               )
@@ -334,10 +334,14 @@ class TodoListPopup extends StatelessWidget {
 
 class TodoListCheckbox extends StatefulWidget {
   final TodoModel todo;
+  final Function(int) onAddTodo;
+  final Function(int) onRemoveTodo;
 
   const TodoListCheckbox({
     super.key,
     required this.todo,
+    required this.onAddTodo,
+    required this.onRemoveTodo,
   });
 
   @override
@@ -349,12 +353,19 @@ class _TodoListCheckboxState extends State<TodoListCheckbox> {
 
   @override
   Widget build(BuildContext context) {
+    onTap() {
+      setState(() {
+        isCheck = isCheck == true ? false : true;
+        if (isCheck == true) {
+          widget.onAddTodo(widget.todo.id);
+        } else {
+          widget.onRemoveTodo(widget.todo.id);
+        }
+      });
+    }
+
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          isCheck = isCheck == true ? false : true;
-        });
-      },
+      onTap: onTap,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -364,11 +375,7 @@ class _TodoListCheckboxState extends State<TodoListCheckbox> {
             checkColor: Colors.white,
             fillColor: MaterialStateProperty.all<Color>(Colors.teal.shade300),
             value: isCheck,
-            onChanged: (bool? value) {
-              setState(() {
-                isCheck = isCheck == true ? false : true;
-              });
-            },
+            onChanged: (bool? value) => onTap(),
           ),
           Expanded(
             child: Text(

@@ -90,21 +90,28 @@ class PatientEditingState extends Equatable {
   }
 
   PatientEditingState addTodoList(List<int> todoIds) {
-    final newPatientTodos = todoIds
-        .where((todoId) =>
-            patientTodos
-                .firstWhere((patientTodo) => patientTodo.todoId == todoId) ==
-            null)
-        .map((todoId) {
-      final patientTodo = PatientTodoModel();
-      patientTodo.todoId = todoId;
-      patientTodo.patientId = patient!.id;
-      patientTodo.done = false;
-      return patientTodo;
-    }).toList();
-    final updatedPatientTodos = [...patientTodos, ...newPatientTodos];
+    // Remove unselected
+    final updatedSelectedPatientTodos = patientTodos
+        .where((patientTodo) => todoIds.contains(patientTodo.todoId))
+        .toList();
+
+    // Add new selected
+    final updateSelectedPatientTodoIds =
+        updatedSelectedPatientTodos.map((patientTodo) => patientTodo.todoId);
+    for (final todoId in todoIds) {
+      if (updateSelectedPatientTodoIds.contains(todoId) == false) {
+        final patientTodo = PatientTodoModel();
+        patientTodo.todoId = todoId;
+        patientTodo.patientId = patient!.id;
+        patientTodo.done = false;
+        updatedSelectedPatientTodos.add(patientTodo);
+      }
+    }
+
+    updatedSelectedPatientTodos.sort(
+        (PatientTodoModel a, PatientTodoModel b) => a.todoId! - b.todoId!);
     return copyWith(
-      patientTodos: updatedPatientTodos,
+      patientTodos: updatedSelectedPatientTodos,
     );
   }
 
