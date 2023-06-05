@@ -164,6 +164,7 @@ class PatientToggleList extends StatelessWidget {
                       backgroundColor: Colors.white,
                       content: TodoListPopup(
                         todos: todos,
+                        patientTodos: patientTodos,
                         onAddTodoList: onAddTodoList,
                       ),
                     ),
@@ -241,11 +242,13 @@ class PatientToggle extends StatelessWidget {
 
 class TodoListPopup extends StatefulWidget {
   final List<TodoModel> todos;
+  final List<PatientTodoModel> patientTodos;
   final Function(List<int> todoIds) onAddTodoList;
 
   const TodoListPopup({
     super.key,
     required this.todos,
+    required this.patientTodos,
     required this.onAddTodoList,
   });
 
@@ -255,6 +258,13 @@ class TodoListPopup extends StatefulWidget {
 
 class _TodoListPopupState extends State<TodoListPopup> {
   List<int> addingTodoList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    addingTodoList =
+        widget.patientTodos.map((patientTodo) => patientTodo.todoId!).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -286,8 +296,10 @@ class _TodoListPopupState extends State<TodoListPopup> {
               shrinkWrap: true,
               physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
+                final todo = widget.todos[index];
                 return TodoListCheckbox(
-                    todo: widget.todos[index],
+                    todo: todo,
+                    hasTodo: addingTodoList.contains(todo.id),
                     onAddTodo: onAddTodo,
                     onRemoveTodo: onRemoveTodo);
               },
@@ -334,12 +346,14 @@ class _TodoListPopupState extends State<TodoListPopup> {
 
 class TodoListCheckbox extends StatefulWidget {
   final TodoModel todo;
+  final bool hasTodo;
   final Function(int) onAddTodo;
   final Function(int) onRemoveTodo;
 
   const TodoListCheckbox({
     super.key,
     required this.todo,
+    required this.hasTodo,
     required this.onAddTodo,
     required this.onRemoveTodo,
   });
@@ -350,6 +364,14 @@ class TodoListCheckbox extends StatefulWidget {
 
 class _TodoListCheckboxState extends State<TodoListCheckbox> {
   bool isCheck = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.hasTodo == true) {
+      isCheck = widget.hasTodo;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -380,7 +402,7 @@ class _TodoListCheckboxState extends State<TodoListCheckbox> {
           Expanded(
             child: Text(
               widget.todo.name!,
-              style: const TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 22),
               overflow: TextOverflow.clip,
             ),
           )
