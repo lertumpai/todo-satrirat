@@ -11,16 +11,12 @@ class Database {
   static Future<Isar?> initialize() async {
     if (_instance == null) {
       final dir = await getApplicationDocumentsDirectory();
-      final isar = await Isar.open(
-          [
-            PatientModelSchema,
-            TodoModelSchema,
-            PatientTodoModelSchema,
-          ],
-          directory: dir.path,
-          maxSizeMiB: 1024 * 1,
-          name: "todo_satrirat"
-      );
+      // print("dir>>>> ${dir.absolute}");
+      final isar = await Isar.open([
+        PatientModelSchema,
+        TodoModelSchema,
+        PatientTodoModelSchema,
+      ], directory: dir.path, maxSizeMiB: 1024 * 1, name: "todo_satrirat");
 
       _instance = isar;
     }

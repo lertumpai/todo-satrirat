@@ -62,6 +62,8 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
         state.updateStatus(PatientEditingStatusEnum.saving);
     emit(updatedStatusSaving);
     await db?.writeTxn(() async {
+      final now = DateTime.now();
+      state.patient!.updatedAt = now;
       final patientId = await patientRepo?.put(state.patient!);
       await patientTodoRepo?.filter().patientIdEqualTo(patientId).deleteAll();
       await Future.wait(state.patientTodos.map((patientTodo) async {

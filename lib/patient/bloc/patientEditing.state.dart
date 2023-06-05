@@ -52,18 +52,12 @@ class PatientEditingState extends Equatable {
   }
 
   PatientEditingState updateHn(String hn) {
-    final now = DateTime.now();
-    patient!.updatedAt = now;
     patient!.hn = hn;
-
     return copyWith(patient: patient);
   }
 
   PatientEditingState updateNote(String note) {
-    final now = DateTime.now();
-    patient!.updatedAt = now;
     patient!.note = note;
-
     return copyWith(patient: patient);
   }
 
@@ -111,6 +105,7 @@ class PatientEditingState extends Equatable {
     updatedSelectedPatientTodos.sort(
         (PatientTodoModel a, PatientTodoModel b) => a.todoId! - b.todoId!);
     return copyWith(
+      patient: patient,
       patientTodos: updatedSelectedPatientTodos,
     );
   }
