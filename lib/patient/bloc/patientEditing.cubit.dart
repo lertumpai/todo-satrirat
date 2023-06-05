@@ -34,8 +34,11 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     }
 
     final todos = await todoRepo?.where().findAll();
-    List<PatientTodoModel> patientTodos =
-        (await patientTodoRepo?.filter().patientIdEqualTo(id).findAll())!;
+    List<PatientTodoModel> patientTodos = (await patientTodoRepo
+        ?.filter()
+        .patientIdEqualTo(id)
+        .sortByTodoId()
+        .findAll())!;
 
     final updatedState = state
         .initPatient(
