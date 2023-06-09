@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:isar/isar.dart';
+import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/patient/bloc/patientEditing.cubit.dart';
 import 'package:todo_satrirat/patient/bloc/patientList.cubit.dart';
-import 'package:todo_satrirat/patient/bloc/patientList.state.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 import 'package:todo_satrirat/patient/patientListScreen.dart';
 import 'package:todo_satrirat/settings/bloc/settings.cubit.dart';
 import 'package:todo_satrirat/settings/settingsScreen.dart';
 
 import 'db/db.dart';
+import 'db/model/patient.dart';
 import 'homeScreen.dart';
 
 void main() async {
@@ -41,19 +43,18 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           colorSchemeSeed: Colors.teal,
           appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.teal,
-            iconTheme: IconThemeData(
-              color: Colors.white,
-            ),
-            actionsIconTheme: IconThemeData(
-              color: Colors.white,
-              size: 30,
-            ),
-            titleTextStyle: TextStyle(
-              fontSize: 24,
-              color: Colors.white,
-            )
-          ),
+              backgroundColor: Colors.teal,
+              iconTheme: IconThemeData(
+                color: Colors.white,
+              ),
+              actionsIconTheme: IconThemeData(
+                color: Colors.white,
+                size: 30,
+              ),
+              titleTextStyle: TextStyle(
+                fontSize: 24,
+                color: Colors.white,
+              )),
         ),
         initialRoute: '/',
         routes: {
@@ -66,5 +67,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

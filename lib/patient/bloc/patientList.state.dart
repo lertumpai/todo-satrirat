@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
 
 import '../../db/model/patient.dart';
+import '../models/PatientItem.dart';
 
 enum PatientListStatusEnum { init, loading, searching, ready }
 
 class PatientListState extends Equatable {
-  final List<PatientModel> patients;
+  final List<PatientItemState> patients;
   final PatientListStatusEnum status;
 
   const PatientListState({
@@ -13,23 +14,17 @@ class PatientListState extends Equatable {
     this.status = PatientListStatusEnum.init,
   });
 
-  PatientListState updatePatients(List<PatientModel> patients) {
-    return PatientListState(
-        patients: patients,
-        status: status
-    );
+  PatientListState updatePatients(List<PatientItemState> patients) {
+    return PatientListState(patients: patients, status: status);
   }
 
   PatientListState updateStatus(PatientListStatusEnum status) {
-    return PatientListState(
-        patients: patients,
-        status: status
-    );
+    return PatientListState(patients: patients, status: status);
   }
 
   @override
   List<Object?> get props => [
-    patients,
-    status,
-  ];
+        patients,
+        status,
+      ];
 }

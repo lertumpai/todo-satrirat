@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:isar/isar.dart';
 import 'package:todo_satrirat/db/model/patient.dart';
 import 'package:todo_satrirat/patient/bloc/patientList.state.dart';
+import 'package:todo_satrirat/patient/models/PatientItem.dart';
 
 import '../../db/db.dart';
 import '../../db/model/patientTodo.dart';
@@ -33,8 +34,10 @@ class PatientListCubit extends Cubit<PatientListState> {
     emit(searching);
 
     final patients = await patientRepo?.filter().hnContains(hn).findAll();
+    final patientItems =
+        patients!.map((patient) => PatientItemState(patient)).toList();
     final newState = state
-        .updatePatients(patients!)
+        .updatePatients(patientItems)
         .updateStatus(PatientListStatusEnum.ready);
     emit(newState);
   }
