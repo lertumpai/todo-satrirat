@@ -188,8 +188,14 @@ class PatientTodo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Icon(patientTodo.done == true ? Icons.thumb_up : Icons.thumb_down,
-          size: 40, color: Colors.black54),
+      Icon(
+          patientTodo.done == true
+              ? Icons.check_box
+              : Icons.check_box_outline_blank,
+          size: 40,
+          color: patientTodo.done == true
+              ? Colors.teal.shade300
+              : Colors.red.shade300),
       const SizedBox(width: 5),
       Flexible(
           child: Text(todo.name!,
