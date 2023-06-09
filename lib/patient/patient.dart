@@ -1,5 +1,7 @@
 import 'package:day/day.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_satrirat/db/model/patientTodo.dart';
+import 'package:todo_satrirat/db/model/todo.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
 
 import '../db/model/patient.dart';
@@ -7,12 +9,16 @@ import '../transitionBuilder.dart';
 
 class Patient extends StatelessWidget {
   final PatientModel patient;
+  final List<PatientTodoModel> patientTodos;
+  final List<TodoModel> todos;
   final Function(int) deletePatient;
   final FocusNode focusSearch;
 
   const Patient(
       {super.key,
       required this.patient,
+      required this.todos,
+      required this.patientTodos,
       required this.deletePatient,
       required this.focusSearch});
 
@@ -41,6 +47,11 @@ class Patient extends StatelessWidget {
                 ),
                 PatientNote(
                   note: patient.note!,
+                ),
+                const SizedBox(height: 10),
+                PatientTodos(
+                  patientTodos: patientTodos,
+                  todos: todos,
                 )
               ],
             )),
@@ -137,6 +148,54 @@ class PatientDeleteButton extends StatelessWidget {
         deletePatient(id);
       },
     );
+  }
+}
+
+class PatientTodos extends StatelessWidget {
+  final List<PatientTodoModel> patientTodos;
+  final List<TodoModel> todos;
+
+  const PatientTodos(
+      {super.key, required this.patientTodos, required this.todos});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        if (index == patientTodos.length) {
+          return const SizedBox(height: 1);
+        }
+
+        return PatientTodo(
+            patientTodo: patientTodos[index],
+            todo: todos
+                .firstWhere((todo) => todo.id == patientTodos[index].todoId));
+      },
+      separatorBuilder: (context, i) => const SizedBox(height: 10),
+      itemCount: patientTodos.length + 1,
+    );
+  }
+}
+
+class PatientTodo extends StatelessWidget {
+  final PatientTodoModel patientTodo;
+  final TodoModel todo;
+
+  const PatientTodo({super.key, required this.patientTodo, required this.todo});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      Icon(patientTodo.done == true ? Icons.thumb_up : Icons.thumb_down,
+          size: 40, color: Colors.black54),
+      const SizedBox(width: 5),
+      Flexible(
+          child: Text(todo.name!,
+              style: const TextStyle(fontSize: 20, color: Colors.black87),
+              overflow: TextOverflow.clip))
+    ]);
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:isar/isar.dart';
 import 'package:todo_satrirat/db/model/patient.dart';
+import 'package:todo_satrirat/db/model/todo.dart';
 import 'package:todo_satrirat/patient/bloc/patientList.state.dart';
 import 'package:todo_satrirat/patient/models/PatientItem.dart';
 
@@ -11,6 +12,7 @@ class PatientListCubit extends Cubit<PatientListState> {
   final db = Database.instance;
   final patientRepo = Database.instance?.collection<PatientModel>();
   final patientTodoRepo = Database.instance?.collection<PatientTodoModel>();
+  final todoRepo = Database.instance?.collection<TodoModel>();
 
   PatientListCubit() : super(const PatientListState(patients: []));
 
@@ -33,11 +35,21 @@ class PatientListCubit extends Cubit<PatientListState> {
     final searching = state.updateStatus(PatientListStatusEnum.searching);
     emit(searching);
 
+    final todos = await todoRepo?.where().findAll();
     final patients = await patientRepo?.filter().hnContains(hn).findAll();
-    final patientItems =
-        patients!.map((patient) => PatientItemState(patient)).toList();
+    final patientItems = await Future.wait(patients!.map((patient) async {
+      List<PatientTodoModel> patientTodos = (await patientTodoRepo
+          ?.filter()
+          .patientIdEqualTo(patient.id)
+          .sortByTodoId()
+          .findAll())!;
+      final patientItem = PatientItemState(patient, patientTodos);
+      return patientItem;
+    }));
+
     final newState = state
         .updatePatients(patientItems)
+        .updateTodos(todos!)
         .updateStatus(PatientListStatusEnum.ready);
     emit(newState);
   }

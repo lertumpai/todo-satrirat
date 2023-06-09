@@ -66,6 +66,7 @@ class _PatientListPageState extends State<PatientListPage> {
             }, builder: (context, state) {
               return PatientList(
                 patients: state.patients,
+                todos: state.todos,
                 onDeletePatient: onDeletePatient,
                 focusSearch: _focusSearch,
               );

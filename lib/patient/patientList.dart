@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_satrirat/db/model/todo.dart';
 import 'package:todo_satrirat/patient/models/PatientItem.dart';
 import 'package:todo_satrirat/patient/patient.dart';
 
@@ -6,12 +7,14 @@ import '../db/model/patient.dart';
 
 class PatientList extends StatelessWidget {
   final List<PatientItemState> patients;
+  final List<TodoModel> todos;
   final Function(int) onDeletePatient;
   final FocusNode focusSearch;
 
   const PatientList({
     super.key,
     required this.patients,
+    required this.todos,
     required this.onDeletePatient,
     required this.focusSearch,
   });
@@ -37,6 +40,8 @@ class PatientList extends StatelessWidget {
 
                 return Patient(
                   patient: patients[index].patient,
+                  patientTodos: patients[index].patientTodos,
+                  todos: todos,
                   deletePatient: onDeletePatient,
                   focusSearch: focusSearch,
                 );
