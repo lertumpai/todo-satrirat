@@ -164,17 +164,13 @@ class PatientTodos extends StatelessWidget {
       shrinkWrap: true,
       physics: const AlwaysScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
-        if (index == patientTodos.length) {
-          return const SizedBox(height: 1);
-        }
-
         return PatientTodo(
             patientTodo: patientTodos[index],
             todo: todos
                 .firstWhere((todo) => todo.id == patientTodos[index].todoId));
       },
       separatorBuilder: (context, i) => const SizedBox(height: 10),
-      itemCount: patientTodos.length + 1,
+      itemCount: patientTodos.length,
     );
   }
 }
