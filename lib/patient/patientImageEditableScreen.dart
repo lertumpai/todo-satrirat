@@ -7,6 +7,14 @@ class PatientImageEditablePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    throw Text("data");
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('App หมูอ้วงบันทึกงาน'),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.save)),
+          const SizedBox(width: 10),
+        ],
+      ),
+    );
   }
 }

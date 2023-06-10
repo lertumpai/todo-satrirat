@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/db/model/todo.dart';
+import 'package:todo_satrirat/patient/patientImageEditableScreen.dart';
 
 import '../db/model/patient.dart';
+import '../transitionBuilder.dart';
 
 class PatientEditable extends StatelessWidget {
   final PatientModel patient;
@@ -143,12 +145,17 @@ class PatientImage extends StatelessWidget {
       const Icon(Icons.image, size: 50, color: Colors.black54),
       const SizedBox(width: 10),
       Expanded(
-        child: Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.black54),
-                borderRadius: const BorderRadius.all(Radius.circular(20))),
-            child: Text("9999999 Images", style: TextStyle(fontSize: 20))),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(patientImageEditableRoute());
+          },
+          child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 10),
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.black54),
+                  borderRadius: const BorderRadius.all(Radius.circular(20))),
+              child: Text("9999999 Images", style: TextStyle(fontSize: 20))),
+        ),
       )
     ]);
   }
@@ -428,4 +435,12 @@ class _TodoListCheckboxState extends State<TodoListCheckbox> {
       ),
     );
   }
+}
+
+Route patientImageEditableRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const PatientImageEditablePage(),
+    transitionsBuilder: transitionsBuilder,
+  );
 }
