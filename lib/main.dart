@@ -5,6 +5,7 @@ import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/patient/bloc/patientEditing.cubit.dart';
 import 'package:todo_satrirat/patient/bloc/patientList.cubit.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
+import 'package:todo_satrirat/patient/patientImageEditableScreen.dart';
 import 'package:todo_satrirat/patient/patientListScreen.dart';
 import 'package:todo_satrirat/settings/bloc/settings.cubit.dart';
 import 'package:todo_satrirat/settings/settingsScreen.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
           '/patient-list': (context) => const PatientListPage(),
           '/patient': (context) => const PatientEditablePage(),
           '/settings': (context) => const SettingsPage(),
+          '/patient/images': (context) => const PatientImageEditablePage(),
         },
       ),
     );

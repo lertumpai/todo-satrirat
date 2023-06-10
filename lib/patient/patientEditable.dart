@@ -34,6 +34,8 @@ class PatientEditable extends StatelessWidget {
           onNoteChange: onNoteChange,
         ),
         const SizedBox(height: 15),
+        PatientImage(),
+        const SizedBox(height: 15),
         PatientToggleList(
           patientTodos: patientTodos,
           todos: todos,
@@ -79,23 +81,20 @@ class _PatientNoteState extends State<PatientNote> {
         Row(
           children: [
             const Icon(Icons.person, size: 50, color: Colors.black54),
-            const SizedBox(width: 5),
+            const SizedBox(width: 10),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: _hnController,
-                  onChanged: widget.onHnChange,
-                  style: const TextStyle(fontSize: 20),
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.teal.shade200, width: 1.5),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20))),
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                  ),
+              child: TextField(
+                controller: _hnController,
+                onChanged: widget.onHnChange,
+                style: const TextStyle(fontSize: 20),
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.teal.shade200, width: 1.5),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20))),
+                  border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
                 ),
               ),
             ),
@@ -107,25 +106,22 @@ class _PatientNoteState extends State<PatientNote> {
           children: [
             const Icon(Icons.sticky_note_2_outlined,
                 size: 50, color: Colors.black54),
-            const SizedBox(width: 5),
+            const SizedBox(width: 10),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  maxLines: 5,
-                  minLines: 5,
-                  style: const TextStyle(fontSize: 20),
-                  controller: _noteController,
-                  onChanged: widget.onNoteChange,
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.teal.shade200, width: 1.5),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20))),
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                  ),
+              child: TextField(
+                maxLines: 5,
+                minLines: 5,
+                style: const TextStyle(fontSize: 20),
+                controller: _noteController,
+                onChanged: widget.onNoteChange,
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.teal.shade200, width: 1.5),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20))),
+                  border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
                 ),
               ),
             ),
@@ -133,6 +129,28 @@ class _PatientNoteState extends State<PatientNote> {
         )
       ],
     );
+  }
+}
+
+class PatientImage extends StatelessWidget {
+  const PatientImage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: [
+      const Icon(Icons.image, size: 50, color: Colors.black54),
+      const SizedBox(width: 10),
+      Expanded(
+        child: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                border: Border.all(width: 1, color: Colors.black54),
+                borderRadius: const BorderRadius.all(Radius.circular(20))),
+            child: Text("9999999 Images", style: TextStyle(fontSize: 20))),
+      )
+    ]);
   }
 }
 
