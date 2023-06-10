@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+
+import '../utils/image.dart';
 
 class PatientImageEditablePage extends StatefulWidget {
   const PatientImageEditablePage({
@@ -30,12 +34,6 @@ class _PatientImageEditablePageState extends State<PatientImageEditablePage> {
         images = images + selectedImages;
       });
     }
-  }
-
-  Future<String> imageToBase64(File imageFile) async {
-    List<int> imageBytes = await imageFile.readAsBytes();
-    String base64Image = base64Encode(imageBytes);
-    return base64Image;
   }
 
   @override
