@@ -121,7 +121,12 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
   }
 
   removeImage(PatientImageModel patientImage) {
-    final updatedPatientImage = state.removeImage(patientImage);
+    final removingPatientImage =
+        state.updateStatus(PatientEditingStatusEnum.removingImage);
+    emit(removingPatientImage);
+    final updatedPatientImage = state
+        .removeImage(patientImage)
+        .updateStatus(PatientEditingStatusEnum.ready);
     emit(updatedPatientImage);
   }
 }

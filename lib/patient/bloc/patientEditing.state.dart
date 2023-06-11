@@ -11,6 +11,7 @@ enum PatientEditingStatusEnum {
   init,
   ready,
   addingImage,
+  removingImage,
   loading,
   saving,
   saved,
