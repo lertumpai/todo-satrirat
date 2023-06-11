@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:day/day.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:todo_satrirat/db/model/patientImage.dart';
 import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/db/model/todo.dart';
@@ -223,11 +225,21 @@ class PatientImageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 400,
-      child: Image.memory(
-        base64Decode(patientImage.image!),
-        fit: BoxFit.contain,
+    return GestureDetector(
+      onTap: () {
+        Uint8List bytes = base64Decode(patientImage.image!);
+        ImageProvider imageProvider = MemoryImage(bytes);
+
+        PhotoView(
+          imageProvider: imageProvider,
+        );
+      },
+      child: SizedBox(
+        height: 400,
+        child: Image.memory(
+          base64Decode(patientImage.image!),
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }
