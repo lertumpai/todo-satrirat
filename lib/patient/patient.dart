@@ -231,14 +231,14 @@ class PatientImageItem extends StatelessWidget {
         Navigator.of(context)
             .push(patientImageZoomableRoute(patientImage.image!));
       },
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(width: 1.5, color: Colors.black26),
-            borderRadius: const BorderRadius.all(Radius.circular(20))),
+      child: SizedBox(
         height: 200,
-        child: Image.memory(
-          base64Decode(patientImage.image!),
-          fit: BoxFit.contain,
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          child: Image.memory(
+            base64Decode(patientImage.image!),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

@@ -37,7 +37,7 @@ class PatientImage extends StatelessWidget {
                     onPressed: () {
                       onDeletePatientImage(patientImage);
                     },
-                    icon: const Icon(Icons.clear_rounded),
+                    icon: const Icon(Icons.delete),
                     color: Colors.red.shade500,
                     highlightColor: Colors.white,
                     iconSize: 30,
