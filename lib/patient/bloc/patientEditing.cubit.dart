@@ -84,7 +84,11 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
       }));
 
       // update patient image
-      await patientImageRepo!.putAll(state.patientImages);
+      final patientImages = state.patientImages.map((patientImage) {
+        patientImage.patientId = patientId;
+        return patientImage;
+      }).toList();
+      await patientImageRepo!.putAll(patientImages);
       await Future.wait(state.removePatientImages.map((patientImage) async {
         return patientImageRepo!
             .filter()

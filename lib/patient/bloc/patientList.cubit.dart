@@ -27,6 +27,7 @@ class PatientListCubit extends Cubit<PatientListState> {
     await db?.writeTxn(() async {
       await patientRepo?.delete(id);
       await patientTodoRepo?.filter().patientIdEqualTo(id).deleteAll();
+      await patientImageRepo?.filter().patientIdEqualTo(id).deleteAll();
     });
 
     final newState = state.updateStatus(PatientListStatusEnum.loading);
