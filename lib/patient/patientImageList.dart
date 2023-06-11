@@ -4,12 +4,12 @@ import 'package:todo_satrirat/patient/patientImage.dart';
 
 class PatientImageList extends StatelessWidget {
   final List<PatientImageModel?> patientImages;
-
-  // final Function(int) onDeletePatientImage;
+  final Function(PatientImageModel) onDeletePatientImage;
 
   const PatientImageList({
     super.key,
     required this.patientImages,
+    required this.onDeletePatientImage,
   });
 
   @override
@@ -20,7 +20,9 @@ class PatientImageList extends StatelessWidget {
         shrinkWrap: true,
         physics: const AlwaysScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
-          return PatientImage(patientImage: patientImages[index]!);
+          return PatientImage(
+              patientImage: patientImages[index]!,
+              onDeletePatientImage: onDeletePatientImage);
         },
         separatorBuilder: (context, i) => const SizedBox(height: 10),
         itemCount: patientImages.length,

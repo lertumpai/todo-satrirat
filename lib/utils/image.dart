@@ -13,7 +13,7 @@ Future<String> imageToBase64(File imageFile) async {
 Future<Uint8List> compressAndGetFile(File file) async {
   final result = (await FlutterImageCompress.compressWithFile(
     file.absolute.path,
-    quality: 50,
+    quality: 30,
   ))!;
 
   return result;

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:isar/isar.dart';
 import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/db/model/todo.dart';
 import 'package:todo_satrirat/patient/patient.dart';
@@ -20,9 +21,10 @@ enum PatientEditingStatusEnum {
 class PatientEditingState extends Equatable {
   final PatientModel? patient;
   final List<PatientTodoModel> patientTodos;
-  final List<PatientImageModel> patientImages;
   final List<TodoModel> todos;
   final PatientEditingStatusEnum status;
+  final List<PatientImageModel> patientImages;
+  final List<PatientImageModel> removePatientImages;
 
   const PatientEditingState({
     this.patient,
@@ -30,6 +32,7 @@ class PatientEditingState extends Equatable {
     this.patientTodos = const [],
     this.todos = const [],
     this.patientImages = const [],
+    this.removePatientImages = const [],
   });
 
   PatientEditingState copyWith(
@@ -37,6 +40,7 @@ class PatientEditingState extends Equatable {
       List<PatientTodoModel>? patientTodos,
       List<TodoModel>? todos,
       List<PatientImageModel>? patientImages,
+      List<PatientImageModel>? removePatientImages,
       PatientEditingStatusEnum? status}) {
     return PatientEditingState(
       patient: patient ?? this.patient,
@@ -44,6 +48,7 @@ class PatientEditingState extends Equatable {
       todos: todos ?? this.todos,
       status: status ?? this.status,
       patientImages: patientImages ?? this.patientImages,
+      removePatientImages: removePatientImages ?? this.removePatientImages,
     );
   }
 
@@ -131,10 +136,20 @@ class PatientEditingState extends Equatable {
     return copyWith(patientImages: updatedPatientImages);
   }
 
-  // PatientEditingState removeImage(int index) {
-  //   final updatedPatientImages = patientImages.
-  //   return copyWith(patientImages: updatedPatientImages);
-  // }
+  PatientEditingState removeImage(PatientImageModel patientImage) {
+    List<PatientImageModel> updatedRemovePatientImages = [
+      ...removePatientImages
+    ];
+
+    if (patientImage.id != Isar.minId - 1) {
+      updatedRemovePatientImages.add(patientImage);
+    }
+
+    patientImages.removeWhere((pi) => pi == patientImage);
+    return copyWith(
+        patientImages: patientImages,
+        removePatientImages: updatedRemovePatientImages);
+  }
 
   @override
   List<Object?> get props => [
@@ -142,5 +157,6 @@ class PatientEditingState extends Equatable {
         status,
         patientTodos,
         patientImages,
+        removePatientImages,
       ];
 }

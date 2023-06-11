@@ -72,13 +72,25 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     await db?.writeTxn(() async {
       final now = DateTime.now();
       state.patient!.updatedAt = now;
+
+      // Create or update new patent
       final patientId = await patientRepo?.put(state.patient!);
+
+      // update patient todo
       await patientTodoRepo?.filter().patientIdEqualTo(patientId).deleteAll();
       await Future.wait(state.patientTodos.map((patientTodo) async {
         patientTodo.patientId = patientId;
         return patientTodoRepo?.put(patientTodo);
       }));
+
+      // update patient image
       await patientImageRepo!.putAll(state.patientImages);
+      await Future.wait(state.removePatientImages.map((patientImage) async {
+        return patientImageRepo!
+            .filter()
+            .idEqualTo(patientImage.id)
+            .deleteFirst();
+      }));
     });
     final updatedStatusSaved =
         state.updateStatus(PatientEditingStatusEnum.saved);
@@ -104,11 +116,12 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
   }
 
   addImages(List<String> images) {
-    final updatingPatientImage =
-        state.updateStatus(PatientEditingStatusEnum.addingImage);
-    emit(updatingPatientImage);
-    final updatedPatientImage =
-        state.addImage(images).updateStatus(PatientEditingStatusEnum.ready);
+    final updatedPatientImage = state.addImage(images);
+    emit(updatedPatientImage);
+  }
+
+  removeImage(PatientImageModel patientImage) {
+    final updatedPatientImage = state.removeImage(patientImage);
     emit(updatedPatientImage);
   }
 }

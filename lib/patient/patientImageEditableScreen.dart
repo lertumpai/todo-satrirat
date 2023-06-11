@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_satrirat/db/model/patientImage.dart';
 import 'package:todo_satrirat/patient/patientImageList.dart';
 
 import '../utils/image.dart';
@@ -17,6 +18,10 @@ class PatientImageEditablePage extends StatelessWidget {
   Widget build(BuildContext context) {
     void onAddImages(List<String> images) {
       context.read<PatientEditingCubit>().addImages(images);
+    }
+
+    void onDeletePatientImage(PatientImageModel patientImage) {
+      context.read<PatientEditingCubit>().removeImage(patientImage);
     }
 
     void pickFile() async {
@@ -44,7 +49,10 @@ class PatientImageEditablePage extends StatelessWidget {
       ),
       body: BlocBuilder<PatientEditingCubit, PatientEditingState>(
           builder: (context, state) {
-        return PatientImageList(patientImages: state.patientImages);
+        return PatientImageList(
+          patientImages: state.patientImages,
+          onDeletePatientImage: onDeletePatientImage,
+        );
       }),
     );
   }
