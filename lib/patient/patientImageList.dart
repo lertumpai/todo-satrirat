@@ -14,14 +14,17 @@ class PatientImageList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const AlwaysScrollableScrollPhysics(),
-      itemBuilder: (BuildContext context, int index) {
-        return PatientImage(patientImage: patientImages[index]!);
-      },
-      separatorBuilder: (context, i) => const SizedBox(height: 10),
-      itemCount: patientImages.length,
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ListView.separated(
+        shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) {
+          return PatientImage(patientImage: patientImages[index]!);
+        },
+        separatorBuilder: (context, i) => const SizedBox(height: 10),
+        itemCount: patientImages.length,
+      ),
     );
   }
 }

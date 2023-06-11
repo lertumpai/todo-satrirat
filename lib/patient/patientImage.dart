@@ -15,7 +15,12 @@ class PatientImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          border: Border.all(color: Colors.black26, width: 2)),
+      height: 500,
       child: Image.memory(
         base64Decode(patientImage.image!),
         fit: BoxFit.contain,
