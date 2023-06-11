@@ -8,6 +8,7 @@ import 'package:todo_satrirat/db/model/patientImage.dart';
 import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/db/model/todo.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
+import 'package:todo_satrirat/patient/patientImageZoomAbleScreen.dart';
 
 import '../db/model/patient.dart';
 import '../transitionBuilder.dart';
@@ -160,8 +161,7 @@ class PatientImages extends StatelessWidget {
               )),
         );
       },
-      child: Container(
-        color: Colors.teal,
+      child: Expanded(
         child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Icon(Icons.image,
               size: 40,
@@ -227,15 +227,14 @@ class PatientImageItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Uint8List bytes = base64Decode(patientImage.image!);
-        ImageProvider imageProvider = MemoryImage(bytes);
-
-        PhotoView(
-          imageProvider: imageProvider,
-        );
+        Navigator.of(context)
+            .push(patientImageZoomableRoute(patientImage.image!));
       },
-      child: SizedBox(
-        height: 400,
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(width: 1.5, color: Colors.black26),
+            borderRadius: const BorderRadius.all(Radius.circular(20))),
+        height: 200,
         child: Image.memory(
           base64Decode(patientImage.image!),
           fit: BoxFit.contain,
@@ -323,6 +322,16 @@ Route patientEditableRoute(int patientId) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) =>
         PatientEditablePage(id: patientId),
+    transitionsBuilder: transitionsBuilder,
+  );
+}
+
+Route patientImageZoomableRoute(String image) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        PatientImageZoomablePage(
+      image: image,
+    ),
     transitionsBuilder: transitionsBuilder,
   );
 }

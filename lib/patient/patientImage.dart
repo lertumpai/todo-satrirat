@@ -19,7 +19,7 @@ class PatientImage extends StatelessWidget {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(20)),
-          border: Border.all(color: Colors.black26, width: 2)),
+          border: Border.all(color: Colors.teal.shade200, width: 2)),
       height: 300,
       child: Stack(
         alignment: Alignment.center,
