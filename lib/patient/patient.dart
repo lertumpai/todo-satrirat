@@ -189,7 +189,7 @@ class PatientImageList extends StatelessWidget {
       children: [
         SizedBox(
           width: 500,
-          height: 700,
+          height: 500,
           child: ListView.separated(
             shrinkWrap: true,
             physics: const AlwaysScrollableScrollPhysics(),
