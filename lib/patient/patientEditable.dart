@@ -16,7 +16,6 @@ class PatientEditable extends StatelessWidget {
   final Function(String) onHnChange;
   final Function(String) onNoteChange;
   final Function(List<int> todoIds) onAddTodoList;
-  final Function(List<String> images) onAddImages;
 
   const PatientEditable({
     super.key,
@@ -28,7 +27,6 @@ class PatientEditable extends StatelessWidget {
     required this.onHnChange,
     required this.onNoteChange,
     required this.onAddTodoList,
-    required this.onAddImages,
   });
 
   @override
@@ -42,7 +40,6 @@ class PatientEditable extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         PatientImage(
-          onAddImages: onAddImages,
           patientImages: patientImages,
         ),
         const SizedBox(height: 15),
@@ -144,10 +141,8 @@ class _PatientNoteState extends State<PatientNote> {
 
 class PatientImage extends StatelessWidget {
   final List<PatientImageModel> patientImages;
-  final Function(List<String> images) onAddImages;
 
-  const PatientImage(
-      {super.key, required this.onAddImages, required this.patientImages});
+  const PatientImage({super.key, required this.patientImages});
 
   @override
   Widget build(BuildContext context) {

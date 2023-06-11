@@ -8,6 +8,7 @@ import '../../db/model/patientImage.dart';
 enum PatientEditingStatusEnum {
   init,
   ready,
+  addingImage,
   loading,
   saving,
   saved,

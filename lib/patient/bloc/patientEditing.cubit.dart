@@ -100,7 +100,11 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
   }
 
   addImages(List<String> images) {
-    final updatedPatientImage = state.addImage(images);
+    final updatingPatientImage =
+        state.updateStatus(PatientEditingStatusEnum.addingImage);
+    emit(updatingPatientImage);
+    final updatedPatientImage =
+        state.addImage(images).updateStatus(PatientEditingStatusEnum.ready);
     emit(updatedPatientImage);
   }
 }
