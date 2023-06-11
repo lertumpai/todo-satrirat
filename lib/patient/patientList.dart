@@ -3,8 +3,6 @@ import 'package:todo_satrirat/db/model/todo.dart';
 import 'package:todo_satrirat/patient/models/PatientItem.dart';
 import 'package:todo_satrirat/patient/patient.dart';
 
-import '../db/model/patient.dart';
-
 class PatientList extends StatelessWidget {
   final List<PatientItemState> patients;
   final List<TodoModel> todos;
@@ -41,6 +39,7 @@ class PatientList extends StatelessWidget {
                 return Patient(
                   patient: patients[index].patient,
                   patientTodos: patients[index].patientTodos,
+                  patientImages: patients[index].patientImages,
                   todos: todos,
                   deletePatient: onDeletePatient,
                   focusSearch: focusSearch,

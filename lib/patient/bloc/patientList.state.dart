@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:todo_satrirat/db/model/patientImage.dart';
 import 'package:todo_satrirat/db/model/todo.dart';
 
 import '../models/PatientItem.dart';
@@ -16,16 +17,27 @@ class PatientListState extends Equatable {
     this.status = PatientListStatusEnum.init,
   });
 
+  PatientListState copyWith(
+      {List<PatientItemState>? patients,
+      List<TodoModel>? todos,
+      PatientListStatusEnum? status,
+      List<PatientImageModel>? patientImages}) {
+    return PatientListState(
+        patients: patients ?? this.patients,
+        todos: todos ?? this.todos,
+        status: status ?? this.status);
+  }
+
   PatientListState updatePatients(List<PatientItemState> patients) {
-    return PatientListState(patients: patients, todos: todos, status: status);
+    return copyWith(patients: patients);
   }
 
   PatientListState updateTodos(List<TodoModel> todos) {
-    return PatientListState(patients: patients, todos: todos, status: status);
+    return copyWith(todos: todos);
   }
 
   PatientListState updateStatus(PatientListStatusEnum status) {
-    return PatientListState(patients: patients, todos: todos, status: status);
+    return copyWith(status: status);
   }
 
   @override

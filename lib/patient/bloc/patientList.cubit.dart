@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:isar/isar.dart';
 import 'package:todo_satrirat/db/model/patient.dart';
+import 'package:todo_satrirat/db/model/patientImage.dart';
 import 'package:todo_satrirat/db/model/todo.dart';
 import 'package:todo_satrirat/patient/bloc/patientList.state.dart';
 import 'package:todo_satrirat/patient/models/PatientItem.dart';
@@ -13,6 +14,7 @@ class PatientListCubit extends Cubit<PatientListState> {
   final patientRepo = Database.instance?.collection<PatientModel>();
   final patientTodoRepo = Database.instance?.collection<PatientTodoModel>();
   final todoRepo = Database.instance?.collection<TodoModel>();
+  final patientImageRepo = Database.instance?.collection<PatientImageModel>();
 
   PatientListCubit() : super(const PatientListState(patients: []));
 
@@ -38,12 +40,19 @@ class PatientListCubit extends Cubit<PatientListState> {
     final todos = await todoRepo?.where().findAll();
     final patients = await patientRepo?.filter().hnContains(hn).findAll();
     final patientItems = await Future.wait(patients!.map((patient) async {
-      List<PatientTodoModel> patientTodos = (await patientTodoRepo
-          ?.filter()
+      final patientTodos = (await patientTodoRepo!
+          .filter()
           .patientIdEqualTo(patient.id)
           .sortByTodoId()
-          .findAll())!;
-      final patientItem = PatientItemState(patient, patientTodos);
+          .findAll());
+      final patientImages = await patientImageRepo!
+          .filter()
+          .patientIdEqualTo(patient.id)
+          .findAll();
+      final patientItem = PatientItemState(
+          patientImages: patientImages,
+          patientTodos: patientTodos,
+          patient: patient);
       return patientItem;
     }));
 

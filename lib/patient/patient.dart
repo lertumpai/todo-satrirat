@@ -1,5 +1,6 @@
 import 'package:day/day.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_satrirat/db/model/patientImage.dart';
 import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/db/model/todo.dart';
 import 'package:todo_satrirat/patient/patientEditableScreen.dart';
@@ -10,6 +11,7 @@ import '../transitionBuilder.dart';
 class Patient extends StatelessWidget {
   final PatientModel patient;
   final List<PatientTodoModel> patientTodos;
+  final List<PatientImageModel> patientImages;
   final List<TodoModel> todos;
   final Function(int) deletePatient;
   final FocusNode focusSearch;
@@ -19,6 +21,7 @@ class Patient extends StatelessWidget {
       required this.patient,
       required this.todos,
       required this.patientTodos,
+      required this.patientImages,
       required this.deletePatient,
       required this.focusSearch});
 
@@ -47,6 +50,10 @@ class Patient extends StatelessWidget {
                 ),
                 PatientNote(
                   note: patient.note!,
+                ),
+                const SizedBox(height: 10),
+                PatientImages(
+                  patientImages: patientImages,
                 ),
                 const SizedBox(height: 10),
                 PatientTodos(
@@ -123,6 +130,24 @@ class PatientNote extends StatelessWidget {
           child: Text(note != "" ? note : "ไม่มีการบันทึก",
               style: const TextStyle(fontSize: 20, color: Colors.black87),
               overflow: TextOverflow.clip))
+    ]);
+  }
+}
+
+class PatientImages extends StatelessWidget {
+  final List<PatientImageModel> patientImages;
+
+  const PatientImages({super.key, required this.patientImages});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      Icon(Icons.image,
+          size: 40,
+          color: patientImages.isEmpty ? Colors.black54 : Colors.teal.shade400),
+      const SizedBox(width: 5),
+      Text("${patientImages.length} Images",
+          style: const TextStyle(fontSize: 20))
     ]);
   }
 }
