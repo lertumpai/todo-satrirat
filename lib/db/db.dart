@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:todo_satrirat/db/model/patientImage.dart';
 import 'package:todo_satrirat/db/model/patientTodo.dart';
 
 import 'model/patient.dart';
@@ -16,7 +17,8 @@ class Database {
         PatientModelSchema,
         TodoModelSchema,
         PatientTodoModelSchema,
-      ], directory: dir.path, maxSizeMiB: 1024 * 1, name: "todo_satrirat");
+        PatientImageModelSchema
+      ], directory: dir.path, maxSizeMiB: 1024 * 30, name: "todo_satrirat");
 
       _instance = isar;
     }

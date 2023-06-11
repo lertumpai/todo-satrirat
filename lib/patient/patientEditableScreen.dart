@@ -48,6 +48,10 @@ class _PatientEditablePageState extends State<PatientEditablePage> {
       context.read<PatientEditingCubit>().addTodoList(todoIds);
     }
 
+    void onAddImages(List<String> images) {
+      context.read<PatientEditingCubit>().addImages(images);
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('App หมูอ้วงบันทึกงาน'),
@@ -73,11 +77,13 @@ class _PatientEditablePageState extends State<PatientEditablePage> {
                   child: PatientEditable(
                     patient: state.patient!,
                     patientTodos: state.patientTodos,
+                    patientImages: state.patientImages,
                     todos: state.todos,
                     onTogglePatientTodo: onTogglePatientTodo,
                     onHnChange: onHnChange,
                     onNoteChange: onNoteChange,
                     onAddTodoList: onAddTodoList,
+                    onAddImages: onAddImages,
                   ),
                 )
               : const SizedBox();

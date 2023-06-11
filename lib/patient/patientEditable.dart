@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_satrirat/db/model/patientImage.dart';
 import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/db/model/todo.dart';
 import 'package:todo_satrirat/patient/patientImageEditableScreen.dart';
@@ -10,20 +11,24 @@ class PatientEditable extends StatelessWidget {
   final PatientModel patient;
   final List<PatientTodoModel> patientTodos;
   final List<TodoModel> todos;
+  final List<PatientImageModel> patientImages;
   final Function(int) onTogglePatientTodo;
   final Function(String) onHnChange;
   final Function(String) onNoteChange;
   final Function(List<int> todoIds) onAddTodoList;
+  final Function(List<String> images) onAddImages;
 
   const PatientEditable({
     super.key,
     required this.patient,
     required this.patientTodos,
     required this.todos,
+    required this.patientImages,
     required this.onTogglePatientTodo,
     required this.onHnChange,
     required this.onNoteChange,
     required this.onAddTodoList,
+    required this.onAddImages,
   });
 
   @override
@@ -36,7 +41,10 @@ class PatientEditable extends StatelessWidget {
           onNoteChange: onNoteChange,
         ),
         const SizedBox(height: 15),
-        PatientImage(),
+        PatientImage(
+          onAddImages: onAddImages,
+          patientImages: patientImages,
+        ),
         const SizedBox(height: 15),
         PatientToggleList(
           patientTodos: patientTodos,
@@ -135,9 +143,11 @@ class _PatientNoteState extends State<PatientNote> {
 }
 
 class PatientImage extends StatelessWidget {
-  const PatientImage({
-    super.key,
-  });
+  final List<PatientImageModel> patientImages;
+  final Function(List<String> images) onAddImages;
+
+  const PatientImage(
+      {super.key, required this.onAddImages, required this.patientImages});
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +164,8 @@ class PatientImage extends StatelessWidget {
               decoration: BoxDecoration(
                   border: Border.all(width: 1, color: Colors.black54),
                   borderRadius: const BorderRadius.all(Radius.circular(20))),
-              child: Text("9999999 Images", style: TextStyle(fontSize: 20))),
+              child: Text("${patientImages.length} Images",
+                  style: const TextStyle(fontSize: 20))),
         ),
       )
     ]);

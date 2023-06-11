@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:isar/isar.dart';
 import 'package:todo_satrirat/db/model/patient.dart';
+import 'package:todo_satrirat/db/model/patientImage.dart';
 import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/patient/bloc/patientEditing.state.dart';
 
@@ -12,6 +13,7 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
   final patientRepo = Database.instance?.collection<PatientModel>();
   final todoRepo = Database.instance?.collection<TodoModel>();
   final patientTodoRepo = Database.instance?.collection<PatientTodoModel>();
+  final patientImageRepo = Database.instance?.collection<PatientImageModel>();
 
   PatientEditingCubit() : super(const PatientEditingState());
 
@@ -95,5 +97,10 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     final updatedPatientTodo =
         state.addTodoList(todoIds).updateStatus(PatientEditingStatusEnum.ready);
     emit(updatedPatientTodo);
+  }
+
+  addImages(List<String> images) {
+    final updatedPatientImage = state.addImage(images);
+    emit(updatedPatientImage);
   }
 }

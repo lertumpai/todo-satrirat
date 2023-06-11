@@ -3,6 +3,7 @@ import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/db/model/todo.dart';
 
 import '../../db/model/patient.dart';
+import '../../db/model/patientImage.dart';
 
 enum PatientEditingStatusEnum {
   init,
@@ -17,6 +18,7 @@ enum PatientEditingStatusEnum {
 class PatientEditingState extends Equatable {
   final PatientModel? patient;
   final List<PatientTodoModel> patientTodos;
+  final List<PatientImageModel> patientImages;
   final List<TodoModel> todos;
   final PatientEditingStatusEnum status;
 
@@ -25,18 +27,21 @@ class PatientEditingState extends Equatable {
     this.status = PatientEditingStatusEnum.init,
     this.patientTodos = const [],
     this.todos = const [],
+    this.patientImages = const [],
   });
 
   PatientEditingState copyWith(
       {PatientModel? patient,
       List<PatientTodoModel>? patientTodos,
       List<TodoModel>? todos,
+      List<PatientImageModel>? patientImages,
       PatientEditingStatusEnum? status}) {
     return PatientEditingState(
       patient: patient ?? this.patient,
       patientTodos: patientTodos ?? this.patientTodos,
       todos: todos ?? this.todos,
       status: status ?? this.status,
+      patientImages: patientImages ?? this.patientImages,
     );
   }
 
@@ -110,9 +115,27 @@ class PatientEditingState extends Equatable {
     );
   }
 
+  PatientEditingState addImage(List<String> images) {
+    List<PatientImageModel> newImages = images.map((image) {
+      final patientImage = PatientImageModel();
+      patientImage.image = image;
+      return patientImage;
+    }).toList();
+
+    final updatedPatientImages = patientImages + newImages;
+    return copyWith(patientImages: updatedPatientImages);
+  }
+
+  // PatientEditingState removeImage(int index) {
+  //   final updatedPatientImages = patientImages.
+  //   return copyWith(patientImages: updatedPatientImages);
+  // }
+
   @override
   List<Object?> get props => [
         patient,
         status,
+        patientTodos,
+        patientImages,
       ];
 }
