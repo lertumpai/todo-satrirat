@@ -36,18 +36,21 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
     }
 
     final todos = await todoRepo?.where().findAll();
-    List<PatientTodoModel> patientTodos = (await patientTodoRepo
-        ?.filter()
+    List<PatientTodoModel> patientTodos = (await patientTodoRepo!
+        .filter()
         .patientIdEqualTo(id)
         .sortByTodoId()
-        .findAll())!;
+        .findAll());
+
+    List<PatientImageModel> patientImages =
+        await patientImageRepo!.filter().patientIdEqualTo(id).findAll();
 
     final updatedState = state
         .initPatient(
-          patient: patient!,
-          patientTodos: patientTodos,
-          todos: todos!,
-        )
+            patient: patient!,
+            patientTodos: patientTodos,
+            todos: todos!,
+            patientImages: patientImages)
         .updateStatus(PatientEditingStatusEnum.ready);
     emit(updatedState);
   }
@@ -75,6 +78,7 @@ class PatientEditingCubit extends Cubit<PatientEditingState> {
         patientTodo.patientId = patientId;
         return patientTodoRepo?.put(patientTodo);
       }));
+      await patientImageRepo!.putAll(state.patientImages);
     });
     final updatedStatusSaved =
         state.updateStatus(PatientEditingStatusEnum.saved);

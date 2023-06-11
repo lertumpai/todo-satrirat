@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:todo_satrirat/db/model/patientTodo.dart';
 import 'package:todo_satrirat/db/model/todo.dart';
+import 'package:todo_satrirat/patient/patient.dart';
 
 import '../../db/model/patient.dart';
 import '../../db/model/patientImage.dart';
@@ -49,11 +50,13 @@ class PatientEditingState extends Equatable {
   PatientEditingState initPatient(
       {required PatientModel patient,
       required List<PatientTodoModel> patientTodos,
+      required List<PatientImageModel> patientImages,
       required List<TodoModel> todos}) {
     return copyWith(
       patient: patient,
       patientTodos: patientTodos,
       todos: todos,
+      patientImages: patientImages,
     );
   }
 
@@ -120,6 +123,7 @@ class PatientEditingState extends Equatable {
     List<PatientImageModel> newImages = images.map((image) {
       final patientImage = PatientImageModel();
       patientImage.image = image;
+      patientImage.patientId = patient?.id;
       return patientImage;
     }).toList();
 

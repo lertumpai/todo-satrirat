@@ -20,7 +20,7 @@ class PatientImage extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(20)),
           border: Border.all(color: Colors.black26, width: 2)),
-      height: 500,
+      height: 300,
       child: Image.memory(
         base64Decode(patientImage.image!),
         fit: BoxFit.contain,
