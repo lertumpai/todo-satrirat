@@ -24,8 +24,9 @@ class PatientImageZoomablePage extends StatelessWidget {
         title: const Text('App หมูอ้วงบันทึกงาน'),
       ),
       body: PhotoView(
-        imageProvider: MemoryImage(base64Decode(image!)),
-      ),
+          imageProvider: MemoryImage(base64Decode(image!)),
+          minScale: PhotoViewComputedScale.contained,
+          maxScale: PhotoViewComputedScale.contained * 10),
     );
   }
 }
