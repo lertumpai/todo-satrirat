@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:day/day.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_satrirat/db/model/patientImage.dart';
@@ -141,14 +143,93 @@ class PatientImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Icon(Icons.image,
-          size: 40,
-          color: patientImages.isEmpty ? Colors.black54 : Colors.teal.shade400),
-      const SizedBox(width: 5),
-      Text("${patientImages.length} Images",
-          style: const TextStyle(fontSize: 20))
-    ]);
+    return GestureDetector(
+      onTap: () {
+        if (patientImages.isEmpty) {
+          return;
+        }
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+              backgroundColor: Colors.white,
+              content: PatientImageList(
+                patientImages: patientImages,
+              )),
+        );
+      },
+      child: Container(
+        color: Colors.teal,
+        child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Icon(Icons.image,
+              size: 40,
+              color: patientImages.isEmpty
+                  ? Colors.black54
+                  : Colors.teal.shade400),
+          const SizedBox(width: 5),
+          Text("${patientImages.length} Images",
+              style: const TextStyle(fontSize: 20))
+        ]),
+      ),
+    );
+  }
+}
+
+class PatientImageList extends StatelessWidget {
+  final List<PatientImageModel> patientImages;
+
+  const PatientImageList({super.key, required this.patientImages});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        SizedBox(
+          width: 500,
+          height: 700,
+          child: ListView.separated(
+            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              return PatientImageItem(patientImage: patientImages[index]);
+            },
+            separatorBuilder: (context, i) => const SizedBox(height: 10),
+            itemCount: patientImages.length,
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.clear_rounded),
+              color: Colors.red.shade500,
+              highlightColor: Colors.red.shade50,
+              iconSize: 40,
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class PatientImageItem extends StatelessWidget {
+  final PatientImageModel patientImage;
+
+  const PatientImageItem({super.key, required this.patientImage});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 400,
+      child: Image.memory(
+        base64Decode(patientImage.image!),
+        fit: BoxFit.contain,
+      ),
+    );
   }
 }
 

@@ -25,6 +25,7 @@ dependencies:
   day: ^0.8.0
   file_picker: ^5.3.2
   flutter_image_compress: ^2.0.3
+  photo_view: ^0.14.0
 
 dev_dependencies:
   flutter_test:
