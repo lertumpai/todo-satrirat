@@ -161,7 +161,8 @@ class PatientImages extends StatelessWidget {
               )),
         );
       },
-      child: Expanded(
+      child: Container(
+        color: Colors.white10,
         child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Icon(Icons.image,
               size: 40,
